@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover"/>
+<meta name="theme-color" content="#ec4899"/>
+<title>LATEST QUIZ</title>
+<style>
+:root{--bg:#fff5f8;--surface:#fff;--surface-2:#fce7f3;--primary:#ec4899;--primary-dark:#db2777;--primary-light:#f472b6;--accent:#f43f5e;--accent-dark:#e11d48;--text:#1c1917;--text-2:#78716c;--text-3:#a8a29e;--border:rgba(236,72,153,.1);--border-2:rgba(236,72,153,.2);--success:#10b981;--success-bg:#ecfdf5;--danger:#ef4444;--danger-bg:#fef2f2;--radius:16px;--radius-sm:12px;--radius-lg:22px;--shadow:0 8px 24px rgba(236,72,153,.1),0 2px 6px rgba(0,0,0,.04);--shadow-sm:0 2px 8px rgba(0,0,0,.06);--nav-h:68px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hind Siliguri","Inter","Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit;padding:0}
+input,select,textarea{font-family:inherit;font-size:16px}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:0;height:0}
+svg{display:block}
+.svg-ico{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:0}
+.svg-ico svg{width:100%;height:100%}
+.spinner{width:20px;height:20px;border-radius:50%;border:2.5px solid rgba(236,72,153,.15);border-top-color:var(--primary);animation:spin .7s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.full-loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:900}
+.full-loader .spinner{width:38px;height:38px;border-width:3px}
+
+/* ============ AUTH (compact, app-like) ============ */
+#authScreen{min-height:100dvh;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0) + 14px) 14px calc(env(safe-area-inset-bottom,0) + 14px);background:radial-gradient(900px 500px at 50% 0%,rgba(236,72,153,.1),transparent 60%),var(--bg);justify-content:center;overflow-y:auto}
+.auth-hero{text-align:center;margin:0 0 12px;flex-shrink:0}
+.auth-hero h1{font-size:19px;line-height:1.25;margin:0 0 3px;font-weight:900;letter-spacing:-.4px}
+.auth-hero h1 span{background:linear-gradient(90deg,var(--primary),var(--accent-dark));-webkit-background-clip:text;background-clip:text;color:transparent}
+.auth-hero p{color:var(--text-2);font-size:11px;margin:0 auto;max-width:280px;line-height:1.4}
+.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);max-width:360px;width:100%;margin:0 auto;flex-shrink:0}
+.auth-logo-center{width:44px;height:44px;border-radius:13px;margin:0 auto 8px;background:linear-gradient(135deg,var(--primary-light),var(--primary));display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 18px rgba(236,72,153,.3);overflow:hidden}
+.auth-logo-center img{width:100%;height:100%;object-fit:cover}
+.auth-logo-center svg{width:22px;height:22px}
+.tabs{display:flex;gap:3px;background:var(--surface-2);padding:3px;border-radius:10px;margin-bottom:9px}
+.tabs button{flex:1;padding:6px;border-radius:7px;font-weight:700;font-size:12px;color:var(--text-2);transition:.18s}
+.tabs button.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow-sm)}
+.field{margin-bottom:8px}
+.field label{display:block;font-size:10.5px;color:var(--text-2);margin-bottom:3px;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;background:var(--surface-2);border:1.5px solid transparent;border-radius:9px;color:var(--text);outline:none;transition:.18s;font-size:14.5px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);background:var(--surface)}
+.field input::placeholder{color:var(--text-3)}
+.field textarea{resize:vertical;min-height:60px}
+.btn{width:100%;padding:11px;border-radius:10px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;transition:.18s;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;box-shadow:0 8px 24px rgba(236,72,153,.28)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5;pointer-events:none;box-shadow:none}
+.btn.secondary{background:var(--surface-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none}
+.btn.ghost{background:transparent;color:var(--text-2);box-shadow:none}
+.btn.danger{background:var(--danger-bg);color:var(--danger);border:1.5px solid rgba(239,68,68,.2);box-shadow:none}
+.btn.accent{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;box-shadow:0 8px 24px rgba(244,63,94,.32)}
+.auth-switch{text-align:center;margin-top:7px;color:var(--text-2);font-size:11.5px}
+.auth-switch button{color:var(--primary);font-weight:700}
+.divider{display:flex;align-items:center;gap:10px;margin:8px 0;color:var(--text-3);font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border-2)}
+.google-btn{width:100%;padding:10px 12px;border-radius:10px;background:#fff;color:#3c4043;border:1.5px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:12.5px;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.google-btn:active{transform:scale(.98);background:#f8f9fa}
+.google-btn:disabled{opacity:.6;pointer-events:none}
+.google-btn .g-logo{width:17px;height:17px;flex-shrink:0}
+.google-btn .spinner{width:15px;height:15px;border-width:2px;border-color:#dadce0;border-top-color:#4285F4}
+
+#app{min-height:100dvh;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0) + 16px)}
+.app-header{position:sticky;top:0;z-index:40;background:rgba(255,245,248,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:calc(env(safe-area-inset-top,0) + 12px) 16px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.hdr-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.6);overflow:hidden;box-shadow:0 4px 12px rgba(236,72,153,.25)}
+.hdr-avatar img{width:100%;height:100%;object-fit:cover}
+.hdr-who{flex:1;min-width:0}
+.hdr-who .hi{font-size:11px;color:var(--text-2)}
+.hdr-who .nm{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-btn{position:relative;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);transition:.18s;box-shadow:var(--shadow-sm)}
+.hdr-btn:active{transform:scale(.94)}
+.hdr-btn .n-badge{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--bg)}
+main{padding:18px 16px 8px}
+.page{display:none;animation:fade .3s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.section-hdr{display:flex;justify-content:space-between;align-items:center;margin:22px 4px 12px}
+.section-hdr:first-child{margin-top:0}
+.section-hdr h2{font-size:16.5px;margin:0;font-weight:800;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+.section-hdr h2 svg{width:18px;height:18px;color:var(--primary)}
+
+/* BENTO QUIZ GRID */
+.quiz-bento{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px}
+.quiz-card{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:.18s;cursor:pointer;min-height:148px}
+.quiz-card:active{transform:scale(.98)}
+.quiz-card.wide{grid-column:span 2;flex-direction:row;align-items:center;gap:16px;min-height:118px;padding:18px}
+.quiz-card::after{content:"";position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.08),transparent 70%);pointer-events:none}
+.quiz-card.wide::after{width:140px;height:140px}
+.qc-top{position:relative;z-index:1}
+.qc-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px}
+.quiz-card.wide .qc-ico{width:54px;height:54px;margin-bottom:0}
+.qc-ico svg{width:24px;height:24px}
+.quiz-card.wide .qc-ico svg{width:28px;height:28px}
+.qc-ico.c1{background:#fce7f3;color:#db2777}
+.qc-ico.c2{background:#ecfdf5;color:#059669}
+.qc-ico.c3{background:#fff1f2;color:#be123c}
+.qc-ico.c4{background:#fef2f2;color:#dc2626}
+.qc-ico.c5{background:#f5f3ff;color:#7c3aed}
+.qc-ico.c6{background:#ecfeff;color:#0891b2}
+.qc-title{font-weight:800;font-size:14.5px;letter-spacing:-.2px;margin-bottom:6px;line-height:1.25}
+.quiz-card.wide .qc-title{font-size:16px}
+.qc-body{flex:1;min-width:0}
+.qc-desc{font-size:11px;color:var(--text-2);line-height:1.45;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.qc-meta{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.qc-chip{background:var(--surface-2);color:var(--text-2);font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px}
+.qc-chip.gold{background:#fff1f2;color:#be123c}
+.qc-play{padding:9px 12px;border-radius:99px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;font-weight:800;font-size:11.5px;text-align:center;box-shadow:0 4px 12px rgba(244,63,94,.28);position:relative;z-index:1}
+.qc-play:disabled{opacity:.4;pointer-events:none;background:var(--text-3);box-shadow:none}
+.qc-play.played{background:var(--success-bg);color:var(--success);box-shadow:none}
+.quiz-card.wide .qc-play{padding:10px 18px;font-size:12.5px}
+.quiz-card.played{opacity:.65}
+
+/* ============ SPIN (compact) ============ */
+.spin-card{background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1.5px solid rgba(236,72,153,.15);border-radius:18px;padding:16px 14px;margin-bottom:14px;text-align:center;box-shadow:var(--shadow)}
+.spin-title{font-weight:900;font-size:17px;margin-bottom:2px;color:var(--primary-dark)}
+.spin-sub{font-size:11.5px;color:var(--text-2);margin-bottom:12px}
+.wheel-container{position:relative;width:200px;height:200px;max-width:55vw;max-height:55vw;margin:0 auto 14px;flex-shrink:0}
+.wheel-pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:20px solid var(--primary);z-index:3}
+#wheelCanvas{width:100%;height:100%;max-width:100%;max-height:100%;border-radius:50%;box-shadow:0 0 0 5px #fff,0 0 0 8px var(--primary),0 12px 36px rgba(236,72,153,.3);transition:transform 5s cubic-bezier(.17,.67,.2,1);background:var(--surface-2)}
+.spin-meta{display:flex;gap:20px;justify-content:center;margin-bottom:14px}
+.spin-meta .sm-l{font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.spin-meta .sm-v{font-size:19px;font-weight:900;color:var(--primary);margin-bottom:2px}
+.spin-btn{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:11px 32px;border-radius:99px;font-weight:900;font-size:14px;box-shadow:0 10px 28px rgba(236,72,153,.35);display:inline-flex;align-items:center;gap:8px}
+.spin-btn:disabled{opacity:.5;pointer-events:none;box-shadow:none}
+
+.redeem-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.redeem-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.redeem-head .ri{width:46px;height:46px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:#fff}
+.redeem-head .ri svg{width:22px;height:22px}
+.redeem-head .rt .t{font-weight:800;font-size:16px}
+.redeem-head .rt .s{font-size:12px;color:var(--text-2)}
+.code-input{width:100%;padding:18px;background:var(--surface-2);border:2px solid transparent;border-radius:var(--radius-sm);color:var(--text);outline:none;font-weight:900;letter-spacing:3px;text-transform:uppercase;text-align:center;font-size:20px}
+.code-input:focus{border-color:var(--primary);background:var(--surface)}
+.redeem-note{display:flex;align-items:flex-start;gap:8px;background:var(--surface-2);border-radius:11px;padding:12px;margin-top:14px;font-size:12.5px;color:var(--text-2);line-height:1.55}
+.redeem-note svg{width:16px;height:16px;color:var(--primary);flex-shrink:0;margin-top:1px}
+.yt-btn{width:100%;padding:14px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border-radius:var(--radius-sm);font-weight:800;font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;box-shadow:0 8px 24px rgba(220,38,38,.25)}
+.yt-btn svg{width:20px;height:20px}
+
+/* RANKING */
+.rank-hero{background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1.5px solid rgba(236,72,153,.15);border-radius:var(--radius-lg);padding:22px 18px;margin-bottom:18px;text-align:center;position:relative;overflow:hidden}
+.rank-hero .rh-i{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#fff}
+.rank-hero .rh-i svg{width:28px;height:28px}
+.rank-hero .rh-t{font-weight:900;font-size:18px;margin-bottom:4px;color:var(--primary-dark)}
+.rank-hero .rh-s{font-size:12.5px;color:var(--text-2)}
+.my-rank-card{background:linear-gradient(135deg,var(--primary-light),var(--primary));border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:18px;color:#fff;box-shadow:0 8px 24px rgba(236,72,153,.25)}
+.my-rank-card .mr-num{width:56px;height:56px;border-radius:16px;background:rgba(255,255,255,.2);color:#fff;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.my-rank-card .mr-lbl{font-size:11.5px;color:rgba(255,255,255,.9);text-transform:uppercase;font-weight:700;margin-bottom:3px}
+.my-rank-card .mr-val{font-size:15.5px;font-weight:800}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px;align-items:end;margin-bottom:20px}
+.pod-item{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center;position:relative;box-shadow:var(--shadow-sm)}
+.pod-item.first{border-color:rgba(244,63,94,.5);background:linear-gradient(180deg,#fff1f2,var(--surface));padding:16px 8px}
+.pod-crown{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:24px;height:24px;color:var(--accent-dark)}
+.pod-av{width:46px;height:46px;border-radius:50%;background:var(--surface-2);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:800;font-size:16px;color:var(--primary);overflow:hidden;border:2px solid var(--border)}
+.pod-item.first .pod-av{width:56px;height:56px;font-size:20px;border-color:var(--accent);background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff}
+.pod-av img{width:100%;height:100%;object-fit:cover}
+.pod-rank-tag{position:absolute;top:8px;right:8px;font-size:10px;font-weight:900;color:var(--text-3)}
+.pod-name{font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.pod-wins{font-size:11.5px;font-weight:900;color:var(--primary);display:flex;align-items:center;gap:3px;justify-content:center}
+.pod-wins svg{width:12px;height:12px}
+.rank-list{display:flex;flex-direction:column;gap:8px}
+.rank-row{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)}
+.rank-row.me{background:var(--surface-2);border-color:var(--primary)}
+.rank-pos{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;background:var(--surface-2);color:var(--text-2)}
+.rank-pos.g1{background:linear-gradient(135deg,#f472b6,#db2777);color:#fff}
+.rank-pos.g2{background:linear-gradient(135deg,#e5e7eb,#9ca3af);color:#111}
+.rank-pos.g3{background:linear-gradient(135deg,#d97706,#92400e);color:#fff}
+.rank-av{width:40px;height:40px;border-radius:50%;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--primary);overflow:hidden;flex-shrink:0;border:1.5px solid var(--border)}
+.rank-av img{width:100%;height:100%;object-fit:cover}
+.rank-info{flex:1;min-width:0}
+.rank-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+.rank-name .you{font-size:9.5px;color:#fff;padding:2px 6px;background:var(--primary);border-radius:99px;font-weight:900}
+.rank-name .champ-badge{font-size:9.5px;color:#fff;padding:2px 6px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:99px;font-weight:900}
+.rank-sub{font-size:11px;color:var(--text-3);margin-top:2px;font-weight:600}
+.rank-wins{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0}
+.rank-wins .num{font-weight:900;color:var(--primary);font-size:15px;display:flex;align-items:center;gap:4px}
+.rank-wins .num svg{width:13px;height:13px}
+.rank-wins .lbl{font-size:9.5px;color:var(--text-3);text-transform:uppercase;font-weight:700;margin-top:3px}
+.weekly-box{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid rgba(245,158,11,.25);border-radius:var(--radius-lg);padding:18px;margin-bottom:18px;position:relative;overflow:hidden}
+.weekly-box::before{content:"🏆";position:absolute;font-size:120px;top:-20px;right:-20px;opacity:.08;pointer-events:none}
+.weekly-box .wb-title{font-weight:900;font-size:16px;color:#92400e;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.weekly-box .wb-sub{font-size:12px;color:#a16207;margin-bottom:14px}
+.weekly-row{display:flex;align-items:center;gap:10px;padding:10px;background:rgba(255,255,255,.6);border-radius:12px;margin-bottom:6px}
+.weekly-row .wr-medal{font-size:20px;width:32px;text-align:center;flex-shrink:0}
+.weekly-row .wr-body{flex:1;min-width:0}
+.weekly-row .wr-name{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.weekly-row .wr-stat{font-size:10.5px;color:var(--text-2)}
+.weekly-row .wr-prize{font-weight:900;color:#b45309;font-size:13.5px}
+
+.prof-hero{background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1.5px solid rgba(236,72,153,.15);border-radius:var(--radius-lg);padding:26px 20px;text-align:center;margin-bottom:16px}
+.prof-av{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:30px;color:#fff;margin:0 auto 14px;border:3px solid rgba(255,255,255,.8);overflow:hidden;box-shadow:0 12px 32px rgba(236,72,153,.3)}
+.prof-av img{width:100%;height:100%;object-fit:cover}
+.prof-name{font-weight:900;font-size:20px;margin-bottom:4px}
+.prof-email{color:var(--text-2);font-size:13px}
+.prof-status{display:inline-flex;margin-top:12px;padding:4px 12px;border-radius:99px;font-size:10.5px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;background:var(--success-bg);color:var(--success)}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.stat-box{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)}
+.stat-box .sb-i{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.stat-box .sb-i svg{width:18px;height:18px}
+.stat-box .sb-i.c1{background:#fce7f3;color:var(--primary)}
+.stat-box .sb-i.c2{background:#fff1f2;color:#be123c}
+.stat-box .sb-i.c3{background:var(--success-bg);color:var(--success)}
+.stat-box .sb-i.c4{background:#fef2f2;color:var(--danger)}
+.stat-box .sb-l{font-size:10.5px;color:var(--text-2);text-transform:uppercase;font-weight:700;margin-bottom:2px}
+.stat-box .sb-v{font-size:16px;font-weight:900}
+.menu-list{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.menu-row{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.menu-row:last-child{border-bottom:none}
+.menu-row:active{background:var(--surface-2)}
+.menu-row .mi{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--surface-2);color:var(--primary)}
+.menu-row .mi svg{width:17px;height:17px}
+.menu-row .mt{flex:1;font-weight:700;font-size:14px}
+.menu-row .mr{color:var(--text-3)}
+.menu-row .mr svg{width:16px;height:16px}
+.wallet-page{position:fixed;inset:0;z-index:200;background:var(--bg);padding:calc(env(safe-area-inset-top,0) + 14px) 16px 24px;overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.9,.3,1)}
+.wallet-page.open{transform:none}
+.wp-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.wp-back{width:42px;height:42px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)}
+.wp-back svg{width:20px;height:20px}
+.wp-title{font-weight:900;font-size:18px}
+.wallet-hero{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(236,72,153,.3);color:#fff}
+.wallet-hero::before{content:"";position:absolute;top:-50px;right:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12)}
+.wallet-hero>*{position:relative;z-index:1}
+.wallet-hero .wl{font-size:11.5px;color:rgba(255,255,255,.85);text-transform:uppercase;font-weight:800;margin-bottom:6px}
+.wallet-hero .wamt{font-size:42px;font-weight:900;line-height:1;display:flex;align-items:baseline;gap:8px}
+.wallet-hero .wamt small{font-size:16px;font-weight:700;opacity:.8}
+.wallet-hero .wtaka{font-size:15px;font-weight:800;color:#fce7f3;margin-top:6px}
+.wallet-hero .wrow{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
+.wallet-hero .wms{flex:1}
+.wallet-hero .wms .l{font-size:10.5px;color:rgba(255,255,255,.8);text-transform:uppercase;font-weight:700}
+.wallet-hero .wms .v{font-size:16px;font-weight:900;margin-top:3px}
+.wd-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;border-radius:var(--radius-sm);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 8px 24px rgba(244,63,94,.3);margin-bottom:16px}
+.wd-btn:disabled{opacity:.5;pointer-events:none;box-shadow:none;background:var(--text-3)}
+.wd-btn svg{width:20px;height:20px}
+.wd-item{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:13px;margin-bottom:10px;box-shadow:var(--shadow-sm)}
+.wd-item .wd-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.wd-item .wd-method{font-weight:800;font-size:13.5px}
+.wd-item .wd-coins{font-weight:900;color:var(--primary);font-size:14px}
+.wd-item .wd-info{font-size:11.5px;color:var(--text-2);margin-bottom:8px;line-height:1.5}
+.status-pill{padding:3px 9px;border-radius:99px;font-size:10px;font-weight:900;text-transform:uppercase;display:inline-block}
+.status-pill.pending{background:#fff1f2;color:#be123c}
+.status-pill.approved,.status-pill.paid{background:var(--success-bg);color:var(--success)}
+.status-pill.rejected{background:var(--danger-bg);color:var(--danger)}
+.card-box{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-sm)}
+.tx{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--border)}
+.tx:last-child{border-bottom:none;padding-bottom:0}
+.tx:first-child{padding-top:0}
+.tx .t-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--surface-2);color:var(--primary)}
+.tx .t-ico svg{width:18px;height:18px}
+.tx .t-body{flex:1;min-width:0}
+.tx .t-title{font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx .t-date{font-size:11px;color:var(--text-3);margin-top:2px}
+.tx .t-amt{font-weight:900;font-size:14.5px;text-align:right}
+.tx .t-amt.pos{color:var(--success)}
+.tx .t-amt.neg{color:var(--danger)}
+.notif-item{display:flex;gap:12px;padding:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;box-shadow:var(--shadow-sm)}
+.notif-item.unread{background:var(--surface-2);border-color:rgba(236,72,153,.2)}
+.notif-item .ni{width:40px;height:40px;border-radius:12px;flex-shrink:0;background:var(--surface-2);color:var(--primary);display:flex;align-items:center;justify-content:center}
+.notif-item .ni svg{width:18px;height:18px}
+.notif-item .nb{flex:1;min-width:0}
+.notif-item .nb .nt{font-weight:700;font-size:13.5px;margin-bottom:4px}
+.notif-item .nb .nx{font-size:12.5px;color:var(--text-2);line-height:1.5}
+.notif-item .nb .nd{font-size:10.5px;color:var(--text-3);margin-top:6px;font-weight:600}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:50;height:calc(var(--nav-h) + env(safe-area-inset-bottom,0));padding-bottom:env(safe-area-inset-bottom,0);background:rgba(255,255,255,.98);backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;box-shadow:0 -8px 24px rgba(0,0,0,.04)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-3);font-size:10.5px;font-weight:700;padding-top:8px;position:relative}
+.nav-btn .n-ico{width:26px;height:26px;line-height:0}
+.nav-btn .n-ico svg{width:24px;height:24px;stroke-width:2}
+.nav-btn.active{color:var(--primary)}
+.nav-btn.active .n-ico{transform:translateY(-2px)}
+.nav-btn.active::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:28px;height:3px;border-radius:0 0 3px 3px;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.modal-bg{position:fixed;inset:0;z-index:250;background:rgba(28,25,23,.55);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
+.modal-bg.open{opacity:1;pointer-events:auto}
+.modal{width:100%;max-width:540px;background:var(--surface);border-radius:28px 28px 0 0;padding:22px 20px calc(26px + env(safe-area-inset-bottom,0));max-height:92dvh;overflow-y:auto;transform:translateY(28px);transition:transform .32s cubic-bezier(.2,.9,.3,1);box-shadow:0 -20px 60px rgba(0,0,0,.15)}
+.modal-bg.open .modal{transform:none}
+.modal-handle{width:40px;height:4px;background:var(--border-2);border-radius:99px;margin:0 auto 18px}
+.modal h3{margin:0 0 6px;font-size:20px;font-weight:900}
+.modal .sub{color:var(--text-2);font-size:13.5px;margin:0 0 18px;line-height:1.5}
+.confirm-box{text-align:center;padding:8px 0}
+.confirm-ico{width:72px;height:72px;border-radius:22px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--primary),var(--primary-dark));box-shadow:0 12px 32px rgba(236,72,153,.3)}
+.confirm-ico svg{width:34px;height:34px}
+.confirm-title{font-weight:900;font-size:20px;margin-bottom:8px}
+.confirm-text{color:var(--text-2);font-size:14px;line-height:1.6;margin-bottom:20px;padding:0 8px}
+.confirm-text b{color:var(--primary);font-weight:900}
+.confirm-btns{display:flex;gap:10px}
+.confirm-btns .btn{flex:1;padding:14px 12px;font-size:14.5px}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.quiz-prog{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-2);font-weight:800}
+.quiz-timer{display:flex;align-items:center;gap:6px;background:#fff1f2;color:#be123c;padding:6px 12px;border-radius:99px;font-size:13px;font-weight:900}
+.quiz-timer.warn{background:var(--danger-bg);color:var(--danger);animation:pulse-warn 1s infinite}
+@keyframes pulse-warn{0%,100%{opacity:1}50%{opacity:.6}}
+.quiz-timer svg{width:14px;height:14px}
+.qprog-bar{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin-bottom:20px}
+.qprog-bar>div{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent-dark));border-radius:99px;transition:width .3s}
+.quiz-q{font-size:19px;font-weight:800;line-height:1.4;margin-bottom:22px;padding:16px;background:var(--surface-2);border-radius:14px;border-left:4px solid var(--primary)}
+.quiz-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.quiz-opt{padding:16px 18px;background:var(--surface);border:2px solid var(--border);border-radius:14px;font-weight:700;font-size:15px;text-align:left;color:var(--text);display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm)}
+.quiz-opt .qnum{width:30px;height:30px;border-radius:50%;background:var(--surface-2);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
+.quiz-opt.right{background:var(--success-bg);border-color:var(--success);color:#065f46}
+.quiz-opt.right .qnum{background:var(--success);color:#fff}
+.quiz-opt.wrong{background:var(--danger-bg);border-color:var(--danger);color:#991b1b}
+.quiz-opt.wrong .qnum{background:var(--danger);color:#fff}
+.quiz-opt:disabled{cursor:default;opacity:.85}
+.quiz-result{text-align:center;padding:8px 0}
+.qr-ico{width:88px;height:88px;border-radius:28px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:#fff}
+.qr-ico.win{background:linear-gradient(135deg,var(--success),#059669);box-shadow:0 14px 40px rgba(16,185,129,.35)}
+.qr-ico.lose{background:linear-gradient(135deg,var(--danger),#991b1b);box-shadow:0 14px 40px rgba(239,68,68,.35)}
+.qr-ico.spin{background:linear-gradient(135deg,var(--primary),var(--primary-dark));box-shadow:0 14px 40px rgba(236,72,153,.35)}
+.qr-ico.gift{background:linear-gradient(135deg,var(--accent),var(--accent-dark));box-shadow:0 14px 40px rgba(244,63,94,.35)}
+.qr-ico svg{width:44px;height:44px}
+.qr-title{font-weight:900;font-size:23px;margin-bottom:6px}
+.qr-sub{color:var(--text-2);font-size:14px;margin-bottom:20px;line-height:1.5}
+.qr-stats{display:flex;justify-content:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.qr-stat{padding:12px 20px;background:var(--surface-2);border-radius:14px;min-width:88px}
+.qr-stat .v{font-size:22px;font-weight:900;color:var(--primary)}
+.qr-stat .v.green{color:var(--success)}
+.qr-stat .v.red{color:var(--danger)}
+.qr-stat .l{font-size:10.5px;color:var(--text-2);text-transform:uppercase;font-weight:700;margin-top:4px}
+#toastRoot{position:fixed;left:50%;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0) + 20px);transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:8px;pointer-events:none;width:calc(100% - 32px);max-width:440px}
+.toast{background:#1c1917;color:#fff;padding:13px 17px;border-radius:14px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;animation:toastIn .3s ease}
+.toast .t-dot{width:8px;height:8px;border-radius:50%;background:var(--primary-light);flex-shrink:0}
+.toast.err{background:#7f1d1d}.toast.err .t-dot{background:#fca5a5}
+.toast.ok{background:#064e3b}.toast.ok .t-dot{background:#6ee7b7}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.empty{padding:40px 20px;text-align:center;color:var(--text-3);font-size:13.5px}
+.empty .e-ico{width:56px;height:56px;border-radius:16px;background:var(--surface-2);color:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.empty .e-ico svg{width:26px;height:26px}
+.withdraw-method{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.method{padding:12px 6px;background:var(--surface-2);border:2px solid transparent;border-radius:12px;text-align:center;font-weight:700;font-size:13px;color:var(--text-2);cursor:pointer}
+.method.sel{border-color:var(--primary);background:#fce7f3;color:var(--primary)}
+.popup-bg{position:fixed;inset:0;z-index:500;background:rgba(28,25,23,.7);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(6px)}
+.popup-bg.open{opacity:1;pointer-events:auto}
+.popup-card{width:100%;max-width:400px;background:var(--surface);border-radius:24px;overflow:hidden;transform:scale(.9);transition:transform .3s cubic-bezier(.2,.9,.3,1);box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.popup-bg.open .popup-card{transform:scale(1)}
+.popup-img{width:100%;height:200px;object-fit:cover;background:var(--surface-2);display:block}
+.popup-body{padding:20px}
+.popup-title{font-weight:900;font-size:19px;margin-bottom:8px}
+.popup-text{font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:18px}
+.popup-actions{display:flex;flex-direction:column;gap:8px}
+.popup-cta{width:100%;padding:14px;border-radius:12px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px}
+.popup-skip{width:100%;padding:12px;border-radius:12px;font-weight:700;background:transparent;color:var(--text-2);font-size:13.5px}
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
+.muted{color:var(--text-2)}.center{text-align:center}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authScreen">
+  <div class="auth-hero">
+    <h1>খেলুন কুইজ।<br/><span>জিতুন কয়েন।</span></h1>
+    <p>প্রতিদিন নতুন প্রশ্ন। নতুন চ্যালেঞ্জ।</p>
+  </div>
+  <div class="auth-card">
+    <div class="auth-logo-center" id="authLogoCenter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+    <div class="tabs">
+      <button id="tabLogin" class="active">লগইন</button>
+      <button id="tabRegister">রেজিস্টার</button>
+    </div>
+    <form id="loginForm">
+      <div class="field"><label>ইমেইল</label><input type="email" id="loginEmail" autocomplete="email" required placeholder="you@example.com"/></div>
+      <div class="field"><label>পাসওয়ার্ড</label><input type="password" id="loginPassword" autocomplete="current-password" required placeholder="••••••••"/></div>
+      <button type="submit" class="btn" id="loginBtn">লগইন করুন</button>
+    </form>
+    <form id="registerForm" class="hidden">
+      <div class="field"><label>নাম</label><input type="text" id="regName" autocomplete="name" required placeholder="আপনার নাম" maxlength="40"/></div>
+      <div class="field"><label>ইমেইল</label><input type="email" id="regEmail" autocomplete="email" required placeholder="you@example.com"/></div>
+      <div class="field"><label>পাসওয়ার্ড (min 6)</label><input type="password" id="regPassword" autocomplete="new-password" minlength="6" required placeholder="••••••••"/></div>
+      <button type="submit" class="btn" id="registerBtn">অ্যাকাউন্ট খুলুন</button>
+    </form>
+    <div class="divider"><span>অথবা</span></div>
+    <button type="button" class="google-btn" id="googleSignInBtn">
+      <svg class="g-logo" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      <span>Google দিয়ে সাইন ইন করুন</span>
+    </button>
+    <div class="auth-switch">
+      <span id="switchText">নতুন এসেছেন?</span>
+      <button id="switchBtn">অ্যাকাউন্ট খুলুন</button>
+    </div>
+  </div>
+</div>
+
+<div id="loadingScreen" class="full-loader hidden"><div class="spinner"></div></div>
+
+<div id="app" class="hidden">
+  <header class="app-header">
+    <div class="hdr-avatar" id="hdrAvatar">U</div>
+    <div class="hdr-who">
+      <div class="hi">স্বাগতম</div>
+      <div class="nm" id="hdrName">User</div>
+    </div>
+    <button class="hdr-btn" id="walletBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5"/><circle cx="16" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <button class="hdr-btn" id="notifBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      <span id="notifBadge" class="n-badge hidden">0</span>
+    </button>
+  </header>
+  <main>
+    <section class="page active" id="page-home">
+      <div class="section-hdr">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg> কুইজ ক্যাটাগরি</h2>
+      </div>
+      <div id="quizListBox" class="quiz-bento"></div>
+    </section>
+    <section class="page" id="page-earn">
+      <div class="spin-card">
+        <div class="spin-title">🎡 স্পিন অ্যান্ড উইন</div>
+        <div class="spin-sub" id="spinSubLabel">চাকা ঘুরিয়ে কয়েন জিতুন</div>
+        <div class="wheel-container"><div class="wheel-pointer"></div><canvas id="wheelCanvas" width="600" height="600"></canvas></div>
+        <div class="spin-meta">
+          <div><div class="sm-v" id="spinLeft">5</div><div class="sm-l">বাকি আছে</div></div>
+          <div><div class="sm-v" id="spinRange">5-100</div><div class="sm-l">পরিসীমা</div></div>
+        </div>
+        <button class="spin-btn" id="spinBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          স্পিন করুন
+        </button>
+      </div>
+      <div class="redeem-card">
+        <div class="redeem-head">
+          <div class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/></svg></div>
+          <div class="rt"><div class="t">রিডিম কোড</div><div class="s">YouTube ভিডিও থেকে কোড নিন</div></div>
+        </div>
+        <input type="text" class="code-input" id="redeemInput" placeholder="কোড লিখুন" maxlength="24" autocomplete="off"/>
+        <button class="btn accent" id="redeemBtn" style="margin-top:12px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><polyline points="20 6 9 17 4 12"/></svg>
+          রিডিম করুন
+        </button>
+        <div class="redeem-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div><b>কোড পেতে আমাদের YouTube চ্যানেলে যান।</b><br/>চ্যানেল সাবস্ক্রাইব করুন — ভিডিওতে কোড দেওয়া আছে।</div>
+        </div>
+        <button class="yt-btn" id="ytBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+          YouTube চ্যানেলে যান
+        </button>
+      </div>
+    </section>
+    <section class="page" id="page-ranking">
+      <div id="weeklyBox"></div>
+      <div class="rank-hero">
+        <div class="rh-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+        <div class="rh-t">কুইজ চ্যাম্পিয়ন</div>
+        <div class="rh-s">সবচেয়ে বেশি কুইজ জিতেছে যারা</div>
+      </div>
+      <div class="my-rank-card">
+        <div class="mr-num" id="myRankNum">—</div>
+        <div class="mr-body"><div class="mr-lbl">আপনার র‍্যাংক</div><div class="mr-val" id="myRankVal">কুইজ খেলে র‍্যাংক পান</div></div>
+      </div>
+      <div class="podium" id="podiumBox"></div>
+      <div class="section-hdr"><h2>টপ ১০ চ্যাম্পিয়ন</h2></div>
+      <div class="rank-list" id="rankListBox"></div>
+    </section>
+    <section class="page" id="page-profile">
+      <div class="prof-hero">
+        <div class="prof-av" id="profAvatar">U</div>
+        <div class="prof-name" id="profName">User</div>
+        <div class="prof-email" id="profEmail">—</div>
+        <div class="prof-status" id="profStatusBadge">ACTIVE</div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="sb-i c1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div><div class="sb-body"><div class="sb-l">কয়েন</div><div class="sb-v" id="profCoins">0</div></div></div>
+        <div class="stat-box"><div class="sb-i c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div><div class="sb-body"><div class="sb-l">জয়</div><div class="sb-v" id="profWins">0</div></div></div>
+        <div class="stat-box"><div class="sb-i c3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg></div><div class="sb-body"><div class="sb-l">মোট আয়</div><div class="sb-v" id="profEarned">0</div></div></div>
+        <div class="stat-box"><div class="sb-i c4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/></svg></div><div class="sb-body"><div class="sb-l">কুইজ</div><div class="sb-v" id="profQuizzes">0</div></div></div>
+      </div>
+      <div class="menu-list">
+        <div class="menu-row" id="menuWithdraw">
+          <div class="mi" style="background:#fff1f2;color:#be123c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 19 19 12"/></svg></div>
+          <div class="mt">টাকা তোলার অনুরোধ</div>
+          <div class="mr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+        <div class="menu-row" id="menuEdit">
+          <div class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+          <div class="mt">প্রোফাইল সম্পাদনা</div>
+          <div class="mr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+        <div class="menu-row" id="menuLogout">
+          <div class="mi" style="background:var(--danger-bg);color:var(--danger)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+          <div class="mt" style="color:var(--danger)">লগআউট</div>
+          <div class="mr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="home"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2h-4v-7h-6v7H5a2 2 0 0 1-2-2z"/></svg></span><span>হোম</span></button>
+    <button class="nav-btn" data-page="earn"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></span><span>আর্ন</span></button>
+    <button class="nav-btn" data-page="ranking"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span><span>র‍্যাংকিং</span></button>
+    <button class="nav-btn" data-page="profile"><span class="n-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span><span>প্রোফাইল</span></button>
+  </nav>
+</div>
+
+<div class="wallet-page" id="walletPage">
+  <div class="wp-header">
+    <button class="wp-back" id="walletBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+    <div class="wp-title">ওয়ালেট</div>
+  </div>
+  <div class="wallet-hero">
+    <div class="wl">বর্তমান ব্যালেন্স</div>
+    <div class="wamt"><span id="walletCoins">0</span><small>coins</small></div>
+    <div class="wtaka">≈ ৳<span id="walletTaka">0.00</span></div>
+    <div class="wrow">
+      <div class="wms"><div class="l">মোট আয়</div><div class="v" id="walletEarned">0</div></div>
+      <div class="wms"><div class="l">তোলা হয়েছে</div><div class="v" id="walletWithdrawn">0</div></div>
+    </div>
+  </div>
+  <button class="wd-btn" id="walletWdBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 19 19 12"/></svg>
+    টাকা তোলার অনুরোধ
+  </button>
+  <div class="section-hdr mt-24"><h2>তোলার অনুরোধ</h2></div>
+  <div id="walletWdBox"></div>
+  <div class="section-hdr mt-24"><h2>লেনদেন</h2></div>
+  <div class="card-box" id="walletTxBox"></div>
+</div>
+
+<div class="wallet-page" id="notifPage">
+  <div class="wp-header">
+    <button class="wp-back" id="notifBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+    <div class="wp-title">নোটিফিকেশন</div>
+    <button class="wp-back" id="markAllRead" style="margin-left:auto;width:auto;padding:0 14px;height:40px;border-radius:99px;font-weight:700;font-size:12.5px">সব পড়ুন</button>
+  </div>
+  <div id="notifListBox"></div>
+</div>
+
+<div class="popup-bg" id="popupBg">
+  <div class="popup-card">
+    <img id="popupImg" class="popup-img" alt=""/>
+    <div class="popup-body">
+      <div class="popup-title" id="popupTitle"></div>
+      <div class="popup-text" id="popupText"></div>
+      <div class="popup-actions">
+        <button class="popup-cta" id="popupCta">বিস্তারিত দেখুন →</button>
+        <button class="popup-skip" id="popupSkip">আজ আর দেখবেন না</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modalRoot"><div class="modal" id="modalContent"></div></div>
+<div id="toastRoot"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getDatabase, ref, set, get, update, push, onValue, runTransaction, serverTimestamp, query, orderByChild, limitToLast, equalTo } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+const firebaseConfig={apiKey:"AIzaSyBUIlWsDMMe0v02APMNNxHslS1OzOdwXFE",authDomain:"quiz-258da.firebaseapp.com",databaseURL:"https://quiz-258da-default-rtdb.firebaseio.com",projectId:"quiz-258da",storageBucket:"quiz-258da.firebasestorage.app",messagingSenderId:"1088297869847",appId:"1:1088297869847:web:dda96d6409368b6c8e7252"};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const I = {
+  wheel:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>`,
+  quiz:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8.01" y2="11"/><line x1="12" y1="11" x2="12.01" y2="11"/><line x1="16" y1="11" x2="16.01" y2="11"/></svg>`,
+  trophy:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`,
+  crown:`<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3 6l4 5 5-7 5 7 4-5v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></svg>`,
+  bell:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>`,
+  sparkle:`<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2 13.6 8.4 20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6z"/></svg>`,
+  gift:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>`,
+  chart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>`,
+  clock:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>`,
+  x:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+  play:`<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 4 20 12 6 20 6 4"/></svg>`,
+  globe:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>`,
+  flask:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3l4 11a2 2 0 0 1-1.8 2.8H6.8A2 2 0 0 1 5 17L9 6V3z"/><path d="M5 17h14"/></svg>`,
+  book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+  flag:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+  film:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>`,
+  coin:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>`
+};
+function ic(name, size=20){return `<span class="svg-ico" style="width:${size}px;height:${size}px;">${I[name]||""}</span>`;}
+
+const BUILTIN = [
+{id:"bangladesh",title:"বাংলাদেশ",icon:"flag",cls:"c3",desc:"ইতিহাস, রাষ্ট্রব্যবস্থা ও মুক্তিযুদ্ধ",fee:50,reward:20,qs:[
+{q:"মুজিবনগর সরকার গঠিত হয় কোন তারিখে?",o:["১০ এপ্রিল ১৯৭১","১৭ এপ্রিল ১৯৭১","২৬ মার্চ ১৯৭১","৭ এপ্রিল ১৯৭১"],a:1},
+{q:"মুক্তিযুদ্ধে মোট কতটি সেক্টর ছিল?",o:["৯টি","১০টি","১১টি","১৩টি"],a:2},
+{q:"বাংলাদেশের সংবিধান কার্যকর হয় কোন তারিখে?",o:["১৬ ডিসেম্বর ১৯৭২","১৭ এপ্রিল ১৯৭২","২৬ মার্চ ১৯৭২","৪ নভেম্বর ১৯৭২"],a:0},
+{q:"বাংলাদেশকে স্বীকৃতি দানকারী প্রথম দেশ?",o:["ভারত","ভুটান","সোভিয়েত ইউনিয়ন","মিয়ানমার"],a:1},
+{q:"১৯৭০ সালের নির্বাচনে আওয়ামী লীগ কত আসন পায়?",o:["১৫১","১৬০","১৬৭","১৭০"],a:2},
+{q:"বাংলাদেশ ব্যাংক প্রতিষ্ঠিত হয় কত সালে?",o:["১৯৭১","১৯৭২","১৯৭৩","১৯৭৪"],a:1},
+{q:"ঢাকা বাংলার রাজধানী হয় কত সালে?",o:["১৬০৮","১৬১০","১৬১২","১৬২০"],a:1},
+{q:"মুজিবনগর সরকারের অস্থায়ী রাষ্ট্রপতি কে?",o:["তাজউদ্দিন","সৈয়দ নজরুল ইসলাম","কামরুজ্জামান","মনসুর আলী"],a:1},
+{q:"বাংলাদেশ কত সালে জাতিসংঘের সদস্য হয়?",o:["১৯৭২","১৯৭৩","১৯৭৪","১৯৭৫"],a:2},
+{q:"ভাষা আন্দোলনের সময় পাকিস্তানের প্রধানমন্ত্রী?",o:["লিয়াকত","খাজা নাজিমুদ্দিন","ফিরোজ নুন","জিন্নাহ"],a:1},
+{q:"বাংলাদেশের প্রথম প্রধানমন্ত্রী কে?",o:["শেখ মুজিবুর","তাজউদ্দিন আহমদ","মনসুর আলী","কামরুজ্জামান"],a:1},
+{q:"৬ দফা আন্দোলন শুরু হয় কত সালে?",o:["১৯৬৫","১৯৬৬","১৯৬৮","১৯৬৯"],a:1},
+{q:"সংবিধানে মোট কতটি অনুচ্ছেদ আছে?",o:["১৫০","১৫৩","১৬০","১৭০"],a:1},
+{q:"জাতীয় সংসদের আসন সংখ্যা কত?",o:["৩০০","৩২৫","৩৫০","৩০৫"],a:2},
+{q:"প্রথম অস্থায়ী রাজধানী কোথায় ছিল?",o:["ঢাকা","মুজিবনগর","সিলেট","চট্টগ্রাম"],a:1},
+{q:"বাংলা একাডেমি প্রতিষ্ঠিত হয় কত সালে?",o:["১৯৫২","১৯৫৫","১৯৫৭","১৯৬০"],a:1},
+{q:"ঢাকা বিশ্ববিদ্যালয় প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯১৮","১৯২০","১৯২১","১৯২৩"],a:2},
+{q:"বাংলাদেশের প্রথম রাষ্ট্রপতি কে?",o:["সৈয়দ নজরুল","শেখ মুজিবুর","তাজউদ্দিন","আবু সাঈদ"],a:1},
+{q:"মুক্তিযুদ্ধের সময় ভারতের প্রধানমন্ত্রী?",o:["নেহরু","শাস্ত্রী","ইন্দিরা গান্ধী","রাজীব"],a:2},
+{q:"বঙ্গভঙ্গ রদ হয় কত সালে?",o:["১৯০৫","১৯১১","১৯১৩","১৯২০"],a:1}
+]},
+{id:"world",title:"বিশ্ব সাধারণ জ্ঞান",icon:"globe",cls:"c1",desc:"বিশ্বের প্রথম, প্রতিষ্ঠা ও ব্যক্তিত্ব",fee:50,reward:20,qs:[
+{q:"জাতিসংঘের প্রথম মহাসচিব কে?",o:["ট্রিগভে লি","ডাগ হ্যামারশোল্ড","উ থান্ট","কুর্ট ওয়াল্ডহাইম"],a:0},
+{q:"জাতিসংঘ প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৪৪","১৯৪৫","১৯৪৬","১৯৪৭"],a:1},
+{q:"বিশ্বের প্রথম মহিলা প্রধানমন্ত্রী কোন দেশের?",o:["ভারত","শ্রীলঙ্কা","পাকিস্তান","ইসরাইল"],a:1},
+{q:"নেলসন ম্যান্ডেলা কত বছর কারাবাস করেন?",o:["২২","২৫","২৭","৩০"],a:2},
+{q:"বার্লিন প্রাচীর ধ্বংস হয় কোন সালে?",o:["১৯৮৭","১৯৮৯","১৯৯১","১৯৯৩"],a:1},
+{q:"সোভিয়েত ইউনিয়ন ভেঙে যায় কোন সালে?",o:["১৯৮৯","১৯৯০","১৯৯১","১৯৯২"],a:2},
+{q:"প্রথম বিশ্বযুদ্ধ শুরু হয় কোন ঘটনায়?",o:["পার্ল হারবার","আর্চডিউক হত্যা","বার্লিন চুক্তি","রুশ বিপ্লব"],a:1},
+{q:"মহাকাশে প্রথম মানুষ কে যান?",o:["নিল আর্মস্ট্রং","ইউরি গ্যাগারিন","অ্যালান শেপার্ড","জন গ্লেন"],a:1},
+{q:"নোবেল পুরস্কার চালু হয় কোন সালে?",o:["১৮৯৫","১৯০১","১৯১১","১৯২১"],a:1},
+{q:"NATO প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৪৫","১৯৪৯","১৯৫৫","১৯৬০"],a:1},
+{q:"SAARC প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৮০","১৯৮৫","১৯৯০","১৯৯৩"],a:1},
+{q:"OPEC প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৫৫","১৯৬০","১৯৬৫","১৯৭০"],a:1},
+{q:"হিরোশিমায় বোমা ফেলা হয় কোন তারিখে?",o:["৬ আগস্ট ১৯৪৫","৯ আগস্ট ১৯৪৫","১৫ আগস্ট ১৯৪৫","২ সেপ্টে ১৯৪৫"],a:0},
+{q:"আইফেল টাওয়ার নির্মাণ শেষ হয় কোন সালে?",o:["১৮৭৯","১৮৮৯","১৮৯৯","১৯০৯"],a:1},
+{q:"স্ট্যাচু অব লিবার্টি কোন দেশের উপহার?",o:["যুক্তরাজ্য","ফ্রান্স","স্পেন","ইতালি"],a:1},
+{q:"স্ট্যাচু অব লিবার্টি কোথায় অবস্থিত?",o:["ওয়াশিংটন","বোস্টন","নিউইয়র্ক","শিকাগো"],a:2},
+{q:"প্রথম বিশ্বযুদ্ধ শেষ হয় কোন সালে?",o:["১৯১৬","১৯১৭","১৯১৮","১৯১৯"],a:2},
+{q:"সোভিয়েত ইউনিয়নের শেষ নেতা কে?",o:["ব্রেজনেভ","আন্দ্রোপভ","গর্বাচেভ","ইয়েলতসিন"],a:2},
+{q:"বিশ্বের প্রথম নারী মহাকাশচারী?",o:["তেরেশকোভা","স্যালি রাইড","সাভিতস্কায়া","কাল্পনা চাওলা"],a:0},
+{q:"চাঁদে প্রথম মানুষ কে পৌঁছায়?",o:["বাজ অলড্রিন","নিল আর্মস্ট্রং","জন গ্লেন","ইউরি গ্যাগারিন"],a:1}
+]},
+{id:"science",title:"বিজ্ঞান",icon:"flask",cls:"c6",desc:"সংখ্যা, সাল ও পরিমাণ",fee:75,reward:25,qs:[
+{q:"আলোর গতিবেগ প্রতি সেকেন্ডে কত?",o:["২,৯৯,৭৯২ কিমি","৩,০০,০০০ কিমি","২,৯০,০০০ কিমি","৩,১০,০০০ কিমি"],a:0},
+{q:"সূর্য থেকে পৃথিবীর গড় দূরত্ব?",o:["১৪ কোটি কিমি","১৪.৯ কোটি কিমি","১৫.৫ কোটি কিমি","১৬ কোটি কিমি"],a:1},
+{q:"DNA-র ডাবল হেলিক্স কে আবিষ্কার করেন?",o:["মেন্ডেল","ওয়াটসন ও ক্রিক","ডারউইন","পাস্তুর"],a:1},
+{q:"পেনিসিলিন কে আবিষ্কার করেন?",o:["পাস্তুর","ফ্লেমিং","জেনার","কচ"],a:1},
+{q:"X-ray কে আবিষ্কার করেন?",o:["মেরি কুরি","রন্টজেন","আইনস্টাইন","নিউটন"],a:1},
+{q:"রেডিয়াম কে আবিষ্কার করেন?",o:["পিয়ের ও মেরি কুরি","রাদারফোর্ড","বোর","টমসন"],a:0},
+{q:"মানবদেহে রক্তের pH কত?",o:["৬.৫-৬.৮","৭.০-৭.২","৭.৩৫-৭.৪৫","৭.৮-৮.০"],a:2},
+{q:"মানবদেহে কত লিটার রক্ত থাকে?",o:["৩-৪","৫-৬","৭-৮","৯-১০"],a:1},
+{q:"সালোকসংশ্লেষণে নির্গত গ্যাস?",o:["CO2","নাইট্রোজেন","অক্সিজেন","হাইড্রোজেন"],a:2},
+{q:"ক্লোরোফিলে কোন ধাতু থাকে?",o:["লোহা","ম্যাগনেসিয়াম","ক্যালসিয়াম","কপার"],a:1},
+{q:"হিমোগ্লোবিনে কোন ধাতু থাকে?",o:["কপার","ম্যাগনেসিয়াম","লোহা","জিংক"],a:2},
+{q:"ডায়মন্ডের রাসায়নিক নাম?",o:["কার্বন","সিলিকন","ক্যালসিয়াম","গ্রাফাইট"],a:0},
+{q:"সবচেয়ে নরম খনিজ কোনটি?",o:["ট্যাল্ক","জিপসাম","ক্যালসাইট","অ্যাপাটাইট"],a:0},
+{q:"সোনা পরিশোধনে কী ব্যবহার হয়?",o:["সালফিউরিক","সায়ানাইড","নাইট্রিক","ক্লোরিন"],a:1},
+{q:"টমেটোতে কোন অ্যাসিড থাকে?",o:["সাইট্রিক","অক্সালিক","ল্যাকটিক","অ্যাসিটিক"],a:1},
+{q:"ভিনেগারে কোন অ্যাসিড থাকে?",o:["সাইট্রিক","ল্যাকটিক","অ্যাসিটিক","সালফিউরিক"],a:2},
+{q:"সবচেয়ে হালকা গ্যাস কোনটি?",o:["হিলিয়াম","হাইড্রোজেন","নিয়ন","মিথেন"],a:1},
+{q:"বায়ুমণ্ডলে সবচেয়ে বেশি কী?",o:["অক্সিজেন","নাইট্রোজেন","CO2","আর্গন"],a:1},
+{q:"সূর্যের পৃষ্ঠের তাপমাত্রা কত?",o:["৩,০০০°C","৫,৫০০°C","৮,০০০°C","১০,০০০°C"],a:1},
+{q:"সবচেয়ে দ্রুতগামী স্থল প্রাণী?",o:["সিংহ","চিতা","ঘোড়া","হরিণ"],a:1}
+]},
+{id:"history",title:"ইতিহাস",icon:"book",cls:"c5",desc:"বিশ্ব ও উপমহাদেশের ইতিহাস",fee:50,reward:20,qs:[
+{q:"সিপাহী বিদ্রোহ শুরু হয় কোন সালে?",o:["১৮৫৫","১৮৫৭","১৮৫৯","১৮৬১"],a:1},
+{q:"পলাশীর যুদ্ধ কত সালে?",o:["১৭৫৭","১৭৬৪","১৭৫০","১৭৭০"],a:0},
+{q:"বঙ্গভঙ্গ হয় কোন সালে?",o:["১৯০০","১৯০৫","১৯১১","১৯১৯"],a:1},
+{q:"ভারতের স্বাধীনতা আইন পাস হয় কোন সালে?",o:["১৯৪৫","১৯৪৬","১৯৪৭","১৯৪৮"],a:2},
+{q:"প্রথম বিশ্বযুদ্ধ শুরু কোন সালে?",o:["১৯১২","১৯১৪","১৯১৬","১৯১৮"],a:1},
+{q:"দ্বিতীয় বিশ্বযুদ্ধ শুরু কোন সালে?",o:["১৯৩৭","১৯৩৯","১৯৪১","১৯৪৩"],a:1},
+{q:"রুশ বিপ্লব সংঘটিত হয় কোন সালে?",o:["১৯১৫","১৯১৭","১৯১৯","১৯২১"],a:1},
+{q:"আমেরিকার স্বাধীনতা ঘোষণা কোন সালে?",o:["১৭৭৪","১৭৭৬","১৭৮১","১৭৮৩"],a:1},
+{q:"ফরাসি বিপ্লব সংঘটিত হয় কোন সালে?",o:["১৭৮৯","১৭৯২","১৭৯৯","১৮০৪"],a:0},
+{q:"ম্যাগনা কার্টা সই হয় কোন সালে?",o:["১২১৫","১৩১৫","১৪১৫","১১১৫"],a:0},
+{q:"তাজমহল নির্মাণ শুরু হয় কত সালে?",o:["১৬৩১","১৬৪৮","১৬৫৩","১৬৫৮"],a:0},
+{q:"তাজমহল নির্মাণ শেষ হয় কত সালে?",o:["১৬৪৮","১৬৫৩","১৬৫৮","১৬৬৩"],a:1},
+{q:"প্রথম অলিম্পিক (আধুনিক) হয় কোন সালে?",o:["১৮৯৬","১৯০০","১৯০৪","১৮৯২"],a:0},
+{q:"মহাত্মা গান্ধী হত্যা করা হয় কোন সালে?",o:["১৯৪৭","১৯৪৮","১৯৪৯","১৯৫০"],a:1},
+{q:"জলিয়ানওয়ালাবাগ হত্যাকাণ্ড কোন সালে?",o:["১৯১৭","১৯১৯","১৯২১","১৯২৩"],a:1},
+{q:"অটোমান সাম্রাজ্যের পতন হয় কোন সালে?",o:["১৯১৮","১৯২০","১৯২২","১৯২৪"],a:2},
+{q:"লেনিনের মৃত্যু হয় কোন সালে?",o:["১৯২২","১৯২৪","১৯২৬","১৯২৮"],a:1},
+{q:"মাও সেতুং ক্ষমতায় আসেন কোন সালে?",o:["১৯৪৫","১৯৪৭","১৯৪৯","১৯৫১"],a:2},
+{q:"কিউবার বিপ্লব সফল হয় কোন সালে?",o:["১৯৫৫","১৯৫৭","১৯৫৯","১৯৬১"],a:2},
+{q:"আব্রাহাম লিংকন হত্যা করা হয় কোন সালে?",o:["১৮৬৩","১৮৬৪","১৮৬৫","১৮৬৬"],a:2}
+]},
+{id:"sports",title:"খেলাধুলা",icon:"trophy",cls:"c4",desc:"ক্রিকেট, ফুটবল ও অলিম্পিক",fee:50,reward:20,qs:[
+{q:"প্রথম বিশ্বকাপ ক্রিকেট কোন সালে?",o:["১৯৭১","১৯৭৫","১৯৭৯","১৯৮৩"],a:1},
+{q:"প্রথম বিশ্বকাপ ফুটবল কোন সালে?",o:["১৯২৬","১৯৩০","১৯৩৪","১৯৩৮"],a:1},
+{q:"বাংলাদেশ প্রথম টেস্ট খেলে কার বিপক্ষে?",o:["ভারত","পাকিস্তান","শ্রীলঙ্কা","জিম্বাবুয়ে"],a:0},
+{q:"বাংলাদেশ প্রথম ODI জয় কোন দলের বিপক্ষে?",o:["পাকিস্তান","কেনিয়া","স্কটল্যান্ড","জিম্বাবুয়ে"],a:1},
+{q:"অলিম্পিক কত বছর পরপর হয়?",o:["২","৩","৪","৫"],a:2},
+{q:"প্রথম আধুনিক অলিম্পিক হয় কোন শহরে?",o:["প্যারিস","লন্ডন","এথেন্স","রোম"],a:2},
+{q:"ক্রিকেটে একটি ওভারে কতটি বল?",o:["৪","৫","৬","৮"],a:2},
+{q:"সর্বোচ্চ কত রানে ব্যাটসম্যান আউট হন?",o:["৪০০","৫০১","৫০০","৪৫০"],a:1},
+{q:"প্রথম ৫০০ রানের ইনিংস কে খেলেন?",o:["ব্র্যাডম্যান","লারা","সচিন","ভিভ"],a:1},
+{q:"সচিন কতটি টেস্ট সেঞ্চুরি করেন?",o:["৪৯","৫০","৫১","৫৩"],a:2},
+{q:"ফুটবলে একটি দলে কতজন খেলোয়াড়?",o:["৯","১০","১১","১২"],a:2},
+{q:"বিশ্বকাপে সবচেয়ে বেশি গোল কে করেছেন?",o:["পেলে","ম্যারাডোনা","ক্লোসে","রোনাল্দো"],a:2},
+{q:"অলিম্পিকে সবচেয়ে বেশি স্বর্ণ কে জিতেছেন?",o:["ফেলপস","বোল্ট","লুইস","স্পিৎস"],a:0},
+{q:"ফেলপস কতটি অলিম্পিক স্বর্ণ জিতেছেন?",o:["১৮","২০","২৩","২৫"],a:2},
+{q:"কাবাডি কোন দেশের জাতীয় খেলা?",o:["ভারত","বাংলাদেশ","পাকিস্তান","নেপাল"],a:1},
+{q:"সবচেয়ে বড় ক্রিকেট স্টেডিয়াম?",o:["লর্ডস","নরেন্দ্র মোদি","মেলবোর্ন","ইডেন"],a:1},
+{q:"T20 বিশ্বকাপ প্রথম কোন সালে?",o:["২০০৫","২০০৭","২০০৯","২০১১"],a:1},
+{q:"সর্বোচ্চ ফিফা র্যাংকিং পাওয়া এশিয়ান দেশ?",o:["জাপান","কোরিয়া","ইরান","সৌদি"],a:2},
+{q:"প্রথম টেস্ট ক্রিকেট ম্যাচ কোন সালে?",o:["১৮৫৭","১৮৭৭","১৮৮৭","১৮৯৭"],a:1},
+{q:"প্রথম ODI ম্যাচ কোন সালে?",o:["১৯৬৯","১৯৭১","১৯৭৩","১৯৭৫"],a:1}
+]},
+{id:"movies",title:"সিনেমা ও বিনোদন",icon:"film",cls:"c2",desc:"সিনেমার ইতিহাস ও পরিচালক",fee:50,reward:20,qs:[
+{q:"প্রথম অস্কার অনুষ্ঠিত হয় কোন সালে?",o:["১৯২৭","১৯২৯","১৯৩১","১৯৩৩"],a:1},
+{q:"প্রথম সবাক চলচ্চিত্র কোনটি?",o:["The Jazz Singer","The Gold Rush","Metropolis","Sunrise"],a:0},
+{q:"টাইটানিক ছবির পরিচালক কে?",o:["স্পিলবার্গ","ক্যামেরন","স্করসেস","নোলান"],a:1},
+{q:"বাহুবলী ছবির পরিচালক কে?",o:["রাজামৌলি","করণ জোহর","সঞ্জয় লীলা","হিরানী"],a:0},
+{q:"সবচেয়ে বেশি আয় করা সিনেমা?",o:["টাইটানিক","এন্ডগেম","অ্যাভাটার","স্টার ওয়ার্স"],a:2},
+{q:"এভাটার ছবির পরিচালক কে?",o:["স্কট","ক্যামেরন","নোলান","জ্যাকসন"],a:1},
+{q:"গডফাদার ছবির পরিচালক কে?",o:["স্করসেস","কপোলা","স্পিলবার্গ","ইস্টউড"],a:1},
+{q:"হলিউড কোথায় অবস্থিত?",o:["নিউইয়র্ক","লস অ্যাঞ্জেলেস","শিকাগো","মায়ামি"],a:1},
+{q:"বলিউড কী?",o:["হলিউড","ভারতীয় হিন্দি সিনেমা","ফরাসি সিনেমা","জাপানি সিনেমা"],a:1},
+{q:"অস্কারের আসল নাম কী?",o:["Academy Award","Golden Globe","BAFTA","Emmy"],a:0},
+{q:"বাংলাদেশের প্রথম চলচ্চিত্র কোনটি?",o:["মুখ ও মুখোশ","জীবন থেকে নেওয়া","সুন্দরী","নদী ও নারী"],a:0},
+{q:"বাংলাদেশের প্রথম চলচ্চিত্র মুক্তি কোন সালে?",o:["১৯৫৪","১৯৫৬","১৯৫৮","১৯৬০"],a:1},
+{q:"সত্যজিতের প্রথম ছবি কোনটি?",o:["পথের পাঁচালী","অপরাজিত","অপুর সংসার","চারুলতা"],a:0},
+{q:"The Dark Knight এর পরিচালক কে?",o:["স্নাইডার","নোলান","বার্টন","হোয়েডন"],a:1},
+{q:"জেমস বন্ড সিরিজের নির্মাতা কে?",o:["ইয়ান ফ্লেমিং","হিচকক","কুবরিক","হিউস্টন"],a:0},
+{q:"গেম অফ থ্রোনস কার উপন্যাস?",o:["টলকিয়েন","মার্টিন","স্টিফেন কিং","রাউলিং"],a:1},
+{q:"হ্যারি পটার সিরিজে কতটি বই?",o:["৫","৬","৭","৮"],a:2},
+{q:"প্যারাসাইট কোন দেশের ছবি?",o:["জাপান","দক্ষিণ কোরিয়া","চীন","থাইল্যান্ড"],a:1},
+{q:"মিকি মাউস কার তৈরি?",o:["ওয়ার্নার","ডিজনি","ড্রিমওয়ার্কস","পিক্সার"],a:1},
+{q:"শ্রেষ্ঠ ছবি অস্কার প্রথম জিতেছে?",o:["Wings","Sunrise","Metropolis","The Jazz Singer"],a:0}
+]},
+{id:"math",title:"গণিত",icon:"book",cls:"c5",desc:"সূত্র, সংখ্যা ও জ্যামিতি",fee:75,reward:25,qs:[
+{q:"১ থেকে ১০০ পর্যন্ত যোগফল কত?",o:["৫০০০","৫০৫০","৫১০০","৫১৫০"],a:1},
+{q:"π-এর মান কত দশমিক পর্যন্ত সঠিক?",o:["৩.১৪","৩.১৪১৫","৩.১৪১৫৯","৩.১৪১৬"],a:2},
+{q:"ত্রিভুজের তিন কোণের যোগফল কত?",o:["৯০°","১৮০°","২৭০°","৩৬০°"],a:1},
+{q:"চতুর্ভুজের চার কোণের যোগফল কত?",o:["১৮০°","২৭০°","৩৬০°","৪৫০°"],a:2},
+{q:"সমবাহু ত্রিভুজের প্রতিটি কোণ?",o:["৩০°","৪৫°","৬০°","৯০°"],a:2},
+{q:"বৃত্তের ক্ষেত্রফল নির্ণয়ের সূত্র?",o:["২πr","πr²","πd","২πr²"],a:1},
+{q:"log₁₀(1000) = কত?",o:["১","২","৩","৪"],a:2},
+{q:"৯ × ১১ = কত?",o:["৮৯","৯৯","১০৯","১১৯"],a:1},
+{q:"১৪৪-এর বর্গমূল কত?",o:["১১","১২","১৩","১৪"],a:1},
+{q:"৭² + ৮² = কত?",o:["১১০","১১২","১১৩","১১৫"],a:2},
+{q:"৫% হারে ১০০০ টাকায় ২ বছরে সরল সুদ?",o:["৫০","১০০","১৫০","২০০"],a:1},
+{q:"x + 5 = 12 হলে x = কত?",o:["৫","৬","৭","৮"],a:2},
+{q:"২,৪,৮,১৬,? পরবর্তী সংখ্যা?",o:["২০","২৪","৩২","৩৬"],a:2},
+{q:"১ ডজন = কত?",o:["১০","১১","১২","১৫"],a:2},
+{q:"ঘনকের কতটি edge আছে?",o:["৬","৮","১০","১২"],a:3},
+{q:"বর্গের কর্ণের সূত্র কী?",o:["a√২","a²","২a","a√৩"],a:0},
+{q:"১ মাইল = কত কিলোমিটার?",o:["১.৫","১.৬","১.৭","১.৮"],a:1},
+{q:"৫! = কত?",o:["১২০","১০০","১১০","১৩০"],a:0},
+{q:"১০০-এর ২৫% কত?",o:["২০","২৫","৩০","১৫"],a:1},
+{q:"sin 90° = কত?",o:["০","১","−১","০.৫"],a:1}
+]},
+{id:"islamic",title:"ইসলামিক জ্ঞান",icon:"book",cls:"c6",desc:"কুরআন, হাদিস ও ইসলামের ইতিহাস",fee:50,reward:20,qs:[
+{q:"কুরআনে কতটি মাক্কী সূরা?",o:["৮০","৮৪","৮৬","৯০"],a:2},
+{q:"কুরআনে কতটি মাদানী সূরা?",o:["২৬","২৮","৩০","৩৪"],a:1},
+{q:"কুরআনে কতটি পারা আছে?",o:["২৫","২৮","৩০","৩২"],a:2},
+{q:"কুরআনের সবচেয়ে বড় সূরা?",o:["আল-ফাতিহা","আল-বাকারা","আল-ইমরান","আন-নিসা"],a:1},
+{q:"কুরআনের সবচেয়ে ছোট সূরা?",o:["আল-ইখলাস","আল-কাউসার","আন-নাস","আল-ফালাক"],a:1},
+{q:"নবী (সা.) কত সালে হিজরত করেন?",o:["৬১৪","৬২০","৬২২","৬৩০"],a:2},
+{q:"মক্কা বিজয় কত হিজরিতে?",o:["৬ষ্ঠ","৮ম","১০ম","১২শ"],a:1},
+{q:"ইসলামের প্রথম মুয়াজ্জিন কে?",o:["আবু বকর","বিলাল","উমর","সালমান"],a:1},
+{q:"কোন যুদ্ধে মুসলিমরা বেশি ক্ষতিগ্রস্ত হয়?",o:["বদর","উহুদ","খন্দক","খায়বার"],a:1},
+{q:"বদর যুদ্ধ কত হিজরিতে?",o:["১ম","২য়","৩য়","৪র্থ"],a:1},
+{q:"নবীজির মায়ের নাম কী?",o:["হালিমা","আমিনা","খাদিজা","ফাতিমা"],a:1},
+{q:"নবীজির প্রথম স্ত্রী কে?",o:["আয়েশা","খাদিজা","হাফসা","উম্মে সালমা"],a:1},
+{q:"ইসলামের দ্বিতীয় খলিফা কে?",o:["আবু বকর","উমর","উসমান","আলী"],a:1},
+{q:"সবচেয়ে নির্ভরযোগ্য হাদিস গ্রন্থ?",o:["বুখারী","মুসলিম","তিরমিজি","আবু দাউদ"],a:0},
+{q:"'কুরআনের হৃদয়' কোন সূরা?",o:["ফাতিহা","ইয়াসিন","রহমান","মুলক"],a:1},
+{q:"নবীজির দাদার নাম কী?",o:["আব্দুল মুত্তালিব","হাশেম","আব্দুল্লাহ","আবু তালিব"],a:0},
+{q:"নবীজির জন্ম কোন সালে?",o:["৫৬০","৫৭০","৫৭১","৫৭৩"],a:1},
+{q:"কুরআন নাজিল হয় কত বছরে?",o:["২০","২৩","২৫","৩০"],a:1},
+{q:"কোন সূরায় বিসমিল্লাহ নেই?",o:["তাওবা","ইমরান","কাহফ","হজ"],a:0},
+{q:"নবীজির কবর কোথায়?",o:["মক্কা","মদিনা","তায়েফ","জেদ্দা"],a:1}
+]},
+{id:"tech",title:"প্রযুক্তি",icon:"flask",cls:"c1",desc:"কম্পিউটার, ইন্টারনেট ও প্রযুক্তি",fee:75,reward:25,qs:[
+{q:"WWW-এর আবিষ্কারক কে?",o:["টিম বার্নার্স লি","বিল গেটস","স্টিভ জবস","জুকারবার্গ"],a:0},
+{q:"WWW-এর আবিষ্কার কোন সালে?",o:["১৯৮৫","১৯৮৯","১৯৯১","১৯৯৩"],a:1},
+{q:"CPU-এর পূর্ণ নাম?",o:["Central Processing Unit","Computer Processing Unit","Central Program Unit","Central Personal Unit"],a:0},
+{q:"কম্পিউটারের জনক কে?",o:["বিল গেটস","চার্লস ব্যাবেজ","টুরিং","স্টিভ জবস"],a:1},
+{q:"প্রথম কম্পিউটার প্রোগ্রামার কে?",o:["অ্যাডা লাভলেস","টুরিং","গ্রেস হপার","ব্যাবেজ"],a:0},
+{q:"প্রথম প্রোগ্রামিং ভাষা কোনটি?",o:["FORTRAN","COBOL","Assembly","C"],a:2},
+{q:"C ভাষা কে তৈরি করেন?",o:["ডেনিস রিচি","কার্নিংহান","স্ট্রাসট্রুপ","গসলিং"],a:0},
+{q:"Python নির্মাতা কে?",o:["গুইডো ভ্যান রসাম","গসলিং","স্ট্রাসট্রুপ","লার্ডর্ফ"],a:0},
+{q:"Linux-এর নির্মাতা কে?",o:["স্টলম্যান","টরভাল্ডস","থম্পসন","রিচি"],a:1},
+{q:"Google প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৯৬","১৯৯৮","২০০০","২০০২"],a:1},
+{q:"Facebook প্রতিষ্ঠিত হয় কোন সালে?",o:["২০০২","২০০৪","২০০৬","২০০৮"],a:1},
+{q:"Apple প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৭৪","১৯৭৬","১৯৭৮","১৯৮০"],a:1},
+{q:"Microsoft প্রতিষ্ঠিত হয় কোন সালে?",o:["১৯৭৩","১৯৭৫","১৯৭৭","১৯৭৯"],a:1},
+{q:"প্রথম iPhone মুক্তি পায় কোন সালে?",o:["২০০৫","২০০৭","২০০৯","২০১১"],a:1},
+{q:"প্রথম Android ফোন বাজারে আসে কোন সালে?",o:["২০০৬","২০০৮","২০১০","২০১২"],a:1},
+{q:"বিশ্বের প্রথম ই-মেইল কে পাঠান?",o:["টমলিনসন","বার্নার্স লি","সার্ফ","গেটস"],a:0},
+{q:"WiFi-এর পূর্ণ নাম?",o:["Wireless Fidelity","Wireless Field","Wide Fidelity","Wired Field"],a:0},
+{q:"HTTP-এর পূর্ণ নাম?",o:["HyperText Transfer Protocol","HyperText Transmission Program","Hyper Terminal","High Transfer Text"],a:0},
+{q:"ইন্টারনেটের জনক কে?",o:["ভিন্ট সার্ফ","বার্নার্স লি","টমলিনসন","রবার্ট কান"],a:0},
+{q:"প্রথম কম্পিউটার ভাইরাস কে তৈরি করেন?",o:["রবার্ট মরিস","ফ্রেড কোহেন","জন ম্যাকাফি","মিটনিক"],a:1}
+]},
+{id:"gk",title:"বিচিত্র সাধারণ জ্ঞান",icon:"globe",cls:"c3",desc:"নানা রকম মজার তথ্য",fee:50,reward:20,qs:[
+{q:"সবচেয়ে দীর্ঘ reigning ব্রিটিশ রাজা কে?",o:["জর্জ ষষ্ঠ","এলিজাবেথ দ্বিতীয়","ভিক্টোরিয়া","জর্জ পঞ্চম"],a:1},
+{q:"প্রথম উত্তর মেরুতে কে পৌঁছায়?",o:["পিয়ারি","হেনসন","অ্যামুন্ডসেন","স্কট"],a:0},
+{q:"দক্ষিণ মেরুতে প্রথম কে পৌঁছায়?",o:["পিয়ারি","অ্যামুন্ডসেন","স্কট","শ্যাকলটন"],a:1},
+{q:"এভারেস্ট প্রথম কে জয় করেন?",o:["হিলারি ও তেনজিং","ম্যালরি","ফিঞ্চ","মেসনার"],a:0},
+{q:"এভারেস্ট জয় করা প্রথম মহিলা?",o:["জুনকো তাবেই","তেনজিং","শেরপা","যাদব"],a:0},
+{q:"সবচেয়ে বড় প্রাণী কোনটি?",o:["হাতি","নীল তিমি","জিরাফ","অক্টোপাস"],a:1},
+{q:"সবচেয়ে বিষাক্ত সাপ কোনটি?",o:["কিং কোবরা","ইনল্যান্ড টাইপান","ব্ল্যাক মাম্বা","রাসেল ভাইপার"],a:1},
+{q:"সবচেয়ে বড় পাখি কোনটি?",o:["উটপাখি","ইমু","এমু","আলবাট্রস"],a:0},
+{q:"সবচেয়ে দ্রুতগামী পাখি কোনটি?",o:["বাজপাখি","ঈগল","সোয়ালো","হামিংবার্ড"],a:0},
+{q:"সবচেয়ে বড় হ্রদ কোনটি?",o:["ভিক্টোরিয়া","সুপেরিয়র","কাস্পিয়ান","বৈকাল"],a:2},
+{q:"সবচেয়ে গভীর হ্রদ কোনটি?",o:["বৈকাল","কাস্পিয়ান","টাঙ্গানিকা","সুপেরিয়র"],a:0},
+{q:"সবচেয়ে উঁচু জলপ্রপাত?",o:["নায়াগ্রা","ভিক্টোরিয়া","এঞ্জেল","ইগুয়াসু"],a:2},
+{q:"সবচেয়ে গভীর সমুদ্র খাদ?",o:["মারিয়ানা","টঙ্গা","জাভা","পুয়ের্তো রিকো"],a:0},
+{q:"মারিয়ানা খাদের গভীরতা কত?",o:["৮,০০০ মি","৯,০০০ মি","১১,০০০ মি","১৩,০০০ মি"],a:2},
+{q:"সবচেয়ে দীর্ঘ নদী কোনটি?",o:["আমাজন","নীলনদ","ইয়াংসি","মিসিসিপি"],a:1},
+{q:"সবচেয়ে বেশি পানির নদী কোনটি?",o:["নীলনদ","আমাজন","ইয়াংসি","কঙ্গো"],a:1},
+{q:"পৃথিবীর বয়স কত?",o:["২.৫ বিলিয়ন","৩.৫ বিলিয়ন","৪.৫ বিলিয়ন","৬ বিলিয়ন"],a:2},
+{q:"মহাবিশ্বের বয়স কত?",o:["৮.৮ বিলিয়ন","১১ বিলিয়ন","১৩.৮ বিলিয়ন","১৫ বিলিয়ন"],a:2},
+{q:"সৌরজগতের সবচেয়ে বড় গ্রহ?",o:["শনি","বৃহস্পতি","নেপচুন","ইউরেনাস"],a:1},
+{q:"সৌরজগতে সবচেয়ে বেশি চাঁদ কার?",o:["বৃহস্পতি","শনি","ইউরেনাস","নেপচুন"],a:1}
+]},
+{id:"english",title:"English",icon:"book",cls:"c5",desc:"Vocabulary, Grammar & Idioms",fee:50,reward:20,qs:[
+{q:"Plural of 'crisis'?",o:["crisises","crises","crisi","crisis"],a:1},
+{q:"Antonym of 'benevolent'?",o:["kind","malevolent","generous","helpful"],a:1},
+{q:"Synonym of 'ubiquitous'?",o:["rare","omnipresent","hidden","absent"],a:1},
+{q:"'He is used to ___ early.'",o:["wake","woke","waking","woken"],a:2},
+{q:"Past participle of 'lie' (rest)?",o:["lied","lay","lain","lying"],a:2},
+{q:"Correct spelling?",o:["Pneumonia","Neumonia","Pnumonia","Pneumonea"],a:0},
+{q:"'A bolt from the blue' means?",o:["thunder","unexpected event","rain","storm"],a:1},
+{q:"'To bell the cat' means?",o:["to fight","to take risk","to sing","to sleep"],a:1},
+{q:"Which is a conjunction?",o:["quickly","although","beautiful","running"],a:1},
+{q:"'___ honest man.' Choose article.",o:["A","An","The","None"],a:1},
+{q:"Passive of 'He writes a letter.'?",o:["A letter is written by him","A letter was written by him","A letter has written by him","A letter is being written"],a:0},
+{q:"Antonym of 'frugal'?",o:["thrifty","extravagant","careful","wise"],a:1},
+{q:"'Sui generis' means?",o:["common","unique","similar","general"],a:1},
+{q:"Which is correct?",o:["senior than me","senior to me","senior from me","more senior than me"],a:1},
+{q:"'To be in a quandary' means?",o:["happy","confused","angry","excited"],a:1},
+{q:"Plural of 'phenomenon'?",o:["phenomenons","phenomena","phenomenae","phenomenon"],a:1},
+{q:"'Renaissance' means?",o:["rebirth","decay","war","peace"],a:0},
+{q:"'Neither of the boys ___ present.'",o:["are","is","were","have"],a:1},
+{q:"'Carte blanche' means?",o:["white card","full freedom","blank paper","menu"],a:1},
+{q:"'Vox populi' means?",o:["voice of king","voice of people","silent voice","loud voice"],a:1}
+]},
+{id:"bangla_lit",title:"বাংলা সাহিত্য",icon:"book",cls:"c3",desc:"লেখক, কাব্য ও গ্রন্থ",fee:50,reward:20,qs:[
+{q:"রবীন্দ্রনাথ নোবেল পান কোন সালে?",o:["১৯১১","১৯১৩","১৯১৫","১৯১৭"],a:1},
+{q:"'গীতাঞ্জলি' কাব্যের রচয়িতা?",o:["নজরুল","রবীন্দ্রনাথ","জীবনানন্দ","সুকান্ত"],a:1},
+{q:"'অগ্নিবীণা' কার লেখা?",o:["রবীন্দ্রনাথ","নজরুল","জীবনানন্দ","সুকান্ত"],a:1},
+{q:"'পদ্মা নদীর মাঝি' কার উপন্যাস?",o:["মানিক","বিভূতিভূষণ","শরৎচন্দ্র","তারাশঙ্কর"],a:0},
+{q:"'পথের পাঁচালী' কার লেখা?",o:["মানিক","বিভূতিভূষণ","শরৎচন্দ্র","রবীন্দ্রনাথ"],a:1},
+{q:"'দুর্গেশনন্দিনী' কার লেখা?",o:["বঙ্কিমচন্দ্র","রবীন্দ্রনাথ","শরৎচন্দ্র","মধুসূদন"],a:0},
+{q:"'মেঘনাদবধ কাব্য' কার লেখা?",o:["হেমচন্দ্র","মধুসূদন দত্ত","নবীনচন্দ্র","রঙ্গলাল"],a:1},
+{q:"'বিষাদ সিন্ধু' কার লেখা?",o:["মীর মশাররফ","কায়কোবাদ","শাহাদাত","ইসমাইল"],a:0},
+{q:"'লালসালু' কার লেখা?",o:["সৈয়দ ওয়ালীউল্লাহ","হুমায়ূন আহমেদ","শওকত ওসমান","জহির রায়হান"],a:0},
+{q:"'সোনার তরী' কাব্যগ্রন্থ কার?",o:["নজরুল","রবীন্দ্রনাথ","জীবনানন্দ","সত্যেন্দ্রনাথ"],a:1},
+{q:"'রূপসী বাংলা' কার কাব্যগ্রন্থ?",o:["জীবনানন্দ","রবীন্দ্রনাথ","নজরুল","বুদ্ধদেব"],a:0},
+{q:"'বনলতা সেন' কার কবিতা?",o:["জীবনানন্দ","রবীন্দ্রনাথ","সুকান্ত","নজরুল"],a:0},
+{q:"'সঞ্চিতা' কার কাব্যগ্রন্থ?",o:["রবীন্দ্রনাথ","নজরুল","জীবনানন্দ","সুকান্ত"],a:1},
+{q:"বাংলা ভাষার প্রথম সনেট কে লেখেন?",o:["মধুসূদন দত্ত","রবীন্দ্রনাথ","নজরুল","বঙ্কিমচন্দ্র"],a:0},
+{q:"'অপরাজিত' উপন্যাস কার?",o:["বিভূতিভূষণ","মানিক","শরৎচন্দ্র","রবীন্দ্রনাথ"],a:0},
+{q:"'শেষের কবিতা' কার লেখা?",o:["রবীন্দ্রনাথ","নজরুল","শরৎচন্দ্র","বঙ্কিমচন্দ্র"],a:0},
+{q:"'দেবদাস' কার উপন্যাস?",o:["শরৎচন্দ্র","রবীন্দ্রনাথ","বঙ্কিমচন্দ্র","মানিক"],a:0},
+{q:"'চাঁদ সওদাগর' কোন কাব্যের চরিত্র?",o:["মনসামঙ্গল","মঙ্গলকাব্য","চণ্ডীমঙ্গল","অন্নদামঙ্গল"],a:0},
+{q:"'কবর' কবিতার রচয়িতা কে?",o:["জসীমউদ্দীন","রবীন্দ্রনাথ","নজরুল","সুকান্ত"],a:0},
+{q:"'নকশী কাঁথার মাঠ' কার কাব্যগ্রন্থ?",o:["জসীমউদ্দীন","রবীন্দ্রনাথ","নজরুল","জীবনানন্দ"],a:0}
+]},
+{id:"geography",title:"ভূগোল",icon:"globe",cls:"c6",desc:"দেশ, নদী, পর্বত ও প্রাকৃতিক",fee:50,reward:20,qs:[
+{q:"সবচেয়ে বড় মহাদেশ কোনটি?",o:["আফ্রিকা","এশিয়া","ইউরোপ","উত্তর আমেরিকা"],a:1},
+{q:"সবচেয়ে ছোট মহাদেশ কোনটি?",o:["ইউরোপ","ওশেনিয়া","অ্যান্টার্কটিকা","দক্ষিণ আমেরিকা"],a:1},
+{q:"সবচেয়ে বেশি দেশ কোন মহাদেশে?",o:["এশিয়া","আফ্রিকা","ইউরোপ","আমেরিকা"],a:1},
+{q:"সবচেয়ে বড় দেশ কোনটি?",o:["চীন","রাশিয়া","কানাডা","আমেরিকা"],a:1},
+{q:"সবচেয়ে ছোট দেশ কোনটি?",o:["মোনাকো","ভ্যাটিকান","সান মারিনো","নাউরু"],a:1},
+{q:"সবচেয়ে বেশি জনসংখ্যার দেশ?",o:["চীন","ভারত","আমেরিকা","ইন্দোনেশিয়া"],a:1},
+{q:"সবচেয়ে কম জনসংখ্যার দেশ?",o:["ভ্যাটিকান","মোনাকো","নাউরু","টুভালু"],a:0},
+{q:"per capita সবচেয়ে ধনী দেশ?",o:["আমেরিকা","সুইজারল্যান্ড","মোনাকো","লুক্সেমবার্গ"],a:2},
+{q:"আফ্রিকার সবচেয়ে বড় দেশ?",o:["নাইজেরিয়া","আলজেরিয়া","সুদান","লিবিয়া"],a:1},
+{q:"এশিয়ার সবচেয়ে বড় দেশ?",o:["চীন","ভারত","রাশিয়া","কাজাকিস্তান"],a:2},
+{q:"সবচেয়ে বেশি সময়ের দিন কোন দেশে?",o:["নরওয়ে","সুইডেন","ফিনল্যান্ড","আইসল্যান্ড"],a:0},
+{q:"সবচেয়ে বেশি বৃষ্টিপাত কোথায়?",o:["মৌসিনরাম","হাওয়াই","ফিলিপাইন","বাংলাদেশ"],a:0},
+{q:"সবচেয়ে শুষ্ক মরুভূমি?",o:["সাহারা","আটাকামা","থর","গোবি"],a:1},
+{q:"সবচেয়ে বড় মরুভূমি?",o:["সাহারা","অ্যান্টার্কটিকা","গোবি","আরব"],a:1},
+{q:"সবচেয়ে বেশি তেল উৎপাদনকারী?",o:["সৌদি","আমেরিকা","রাশিয়া","ইরান"],a:1},
+{q:"সবচেয়ে বেশি সোনা উৎপাদনকারী?",o:["দ. আফ্রিকা","চীন","অস্ট্রেলিয়া","রাশিয়া"],a:1},
+{q:"সবচেয়ে বেশি দ্বীপ কোন দেশে?",o:["ইন্দোনেশিয়া","ফিলিপাইন","সুইডেন","মালদ্বীপ"],a:2},
+{q:"সবচেয়ে দীর্ঘ পর্বতমালা?",o:["হিমালয়","আন্দেস","রকি","আল্পস"],a:1},
+{q:"সবচেয়ে লম্বা নদী কোনটি?",o:["আমাজন","নীলনদ","ইয়াংসি","মিসিসিপি"],a:1},
+{q:"সবচেয়ে বড় দ্বীপ কোনটি?",o:["মাদাগাস্কার","গ্রিনল্যান্ড","বোর্নিও","নিউ গিনি"],a:1}
+]}
+];
+
+const DEFAULT_CONFIG = {
+  appName:"LATEST QUIZ", logoUrl:"", welcomeBonus:100,
+  spinRewards:[5,10,15,20,25,30,50,100], spinFreePerDay:5,
+  coinsPerTaka:100, minWithdrawalCoins:10000,
+  quizTimePerQuestion:20,
+  youtubeChannelLink:"",
+  popupEnabled:false, popupImageUrl:"", popupTitle:"", popupText:"", popupLink:""
+};
+let REWARD_CONFIG = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+
+const State = {
+  fbUser:null, profile:null,
+  transactions:[], notifications:[], allUsers:[],
+  quizzes:[], withdrawals:[],
+  currentQuiz:null, currentQuestions:[], currentQuestionIdx:0,
+  currentCorrect:0, currentWrong:0, quizTimer:null,
+  serverTimeOffset:0, spinning:false,
+  dailyProgress:{}, myQuizPlays:{},
+  weeklyReward:null,
+  _listeners:[], _quizBlockClose:null
+};
+
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+const fmtNum = n => (typeof n === "number" ? n : 0).toLocaleString("en-US");
+const fmtTakaStr = coins => (Math.max(0, (coins||0)) / (REWARD_CONFIG.coinsPerTaka||100)).toFixed(2);
+
+function todayKey(){
+  const d = new Date(Date.now() + State.serverTimeOffset);
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,"0")}-${String(d.getUTCDate()).padStart(2,"0")}`;
+}
+function escapeHtml(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
+function seededRandom(seed){return function(){seed|=0;seed=(seed+0x6D2B79F5)|0;let t=Math.imul(seed^(seed>>>15),1|seed);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+function seededShuffle(arr, seed){const rng=seededRandom(seed);const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function getRotatingQuestions(categoryId, allQs, count){
+  if(!allQs || !allQs.length) return [];
+  if(allQs.length <= count) return seededShuffle(allQs, hashStr(categoryId + todayKey()));
+  const sorted = [...allQs].sort((a,b) => hashStr(categoryId + "_" + (a.id||a.q||"")) - hashStr(categoryId + "_" + (b.id||b.q||"")));
+  const dayNum = Math.floor((Date.now() + State.serverTimeOffset) / 86400000);
+  const bucketIdx = ((dayNum % 3) + 3) % 3;
+  const perBucket = Math.ceil(sorted.length / 3);
+  const start = bucketIdx * perBucket;
+  const end = Math.min(start + perBucket, sorted.length);
+  let pool = sorted.slice(start, end);
+  if(pool.length < count){
+    const used = new Set(pool.map(q => q.id || q.q));
+    for(const q of sorted){ if(pool.length >= count) break; if(!used.has(q.id||q.q)){pool.push(q); used.add(q.id||q.q);} }
+  }
+  return seededShuffle(pool, hashStr(categoryId + "_" + todayKey())).slice(0, count);
+}
+
+function toast(msg, type=""){
+  const root = $("#toastRoot");
+  const el = document.createElement("div");
+  el.className = "toast " + type;
+  el.innerHTML = `<span class="t-dot"></span><span>${escapeHtml(msg)}</span>`;
+  root.appendChild(el);
+  setTimeout(()=>{ el.style.transition="opacity .25s, transform .25s"; el.style.opacity="0"; el.style.transform="translateY(8px)"; setTimeout(()=>el.remove(),260); }, 2800);
+}
+function openModal(html){ $("#modalContent").innerHTML = `<div class="modal-handle"></div>` + html; $("#modalRoot").classList.add("open"); }
+function closeModal(){ $("#modalRoot").classList.remove("open"); }
+window.closeModal = closeModal;
+$("#modalRoot").addEventListener("click", e => { if(e.target.id === "modalRoot") closeModal(); });
+
+function friendlyErr(e){
+  const code = e && e.code ? e.code : "";
+  const map = {
+    "auth/invalid-email":"ইমেইল ভুল","auth/user-not-found":"এই ইমেইলে অ্যাকাউন্ট নেই",
+    "auth/wrong-password":"পাসওয়ার্ড ভুল","auth/invalid-credential":"ইমেইল বা পাসওয়ার্ড ভুল",
+    "auth/email-already-in-use":"এই ইমেইল আগে থেকেই আছে","auth/weak-password":"পাসওয়ার্ড কমপক্ষে ৬ অক্ষর",
+    "auth/too-many-requests":"অনেকবার চেষ্টা হয়েছে","auth/network-request-failed":"ইন্টারনেট নেই",
+    "auth/popup-closed-by-user":"সাইন ইন বাতিল","auth/popup-blocked":"Popup block হয়েছে",
+    "auth/cancelled-popup-request":"সাইন ইন বাতিল","auth/account-exists-with-different-credential":"এই ইমেইলে অন্য পদ্ধতিতে অ্যাকাউন্ট আছে",
+    "auth/operation-not-allowed":"Google সাইন ইন চালু নেই","auth/unauthorized-domain":"ডোমেইন অনুমোদিত নয়",
+    "auth/internal-error":"সার্ভার সমস্যা","PERMISSION_DENIED":"অনুমতি নেই"
+  };
+  return map[code] || (e && e.message) || "কিছু একটা ভুল হয়েছে";
+}
+function confirmDialog(title, text, onYes, opts = {}){
+  openModal(`<div class="confirm-box"><div class="confirm-ico">${opts.icon||I.play}</div><div class="confirm-title">${escapeHtml(title)}</div><div class="confirm-text">${text}</div><div class="confirm-btns"><button class="btn secondary" id="confirmNo">${escapeHtml(opts.noText||"বাতিল")}</button><button class="btn ${opts.danger?'danger':'accent'}" id="confirmYes">${escapeHtml(opts.yesText||"হ্যাঁ")}</button></div></div>`);
+  const yesBtn = $("#confirmYes"); let clicked = false;
+  $("#confirmNo").addEventListener("click", () => { if(!clicked) closeModal(); });
+  yesBtn.addEventListener("click", async () => {
+    if(clicked) return; clicked = true;
+    yesBtn.disabled = true; yesBtn.innerHTML = `<span class="spinner"></span>`;
+    closeModal();
+    try { await onYes(); } catch(e) { toast(friendlyErr(e), "err"); }
+  });
+}
+
+function track(unsub){ State._listeners.push(unsub); return unsub; }
+function detachListeners(){ State._listeners.forEach(fn => { try { fn(); } catch(e){} }); State._listeners = []; }
+
+function switchAuth(mode){
+  const l = $("#tabLogin"), r = $("#tabRegister"), lf = $("#loginForm"), rf = $("#registerForm");
+  if(mode === "login"){ l.classList.add("active"); r.classList.remove("active"); lf.classList.remove("hidden"); rf.classList.add("hidden"); $("#switchText").textContent = "নতুন এসেছেন?"; $("#switchBtn").textContent = "অ্যাকাউন্ট খুলুন"; }
+  else { r.classList.add("active"); l.classList.remove("active"); rf.classList.remove("hidden"); lf.classList.add("hidden"); $("#switchText").textContent = "অ্যাকাউন্ট আছে?"; $("#switchBtn").textContent = "লগইন"; }
+}
+$("#tabLogin").addEventListener("click", () => switchAuth("login"));
+$("#tabRegister").addEventListener("click", () => switchAuth("register"));
+$("#switchBtn").addEventListener("click", () => { const isLogin = !$("#loginForm").classList.contains("hidden"); switchAuth(isLogin ? "register" : "login"); });
+$("#loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("#loginBtn"); btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  try { await signInWithEmailAndPassword(auth, $("#loginEmail").value.trim(), $("#loginPassword").value); }
+  catch(err){ toast(friendlyErr(err), "err"); }
+  finally { btn.disabled = false; btn.textContent = "লগইন করুন"; }
+});
+$("#registerForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("#registerBtn");
+  const name = $("#regName").value.trim(), email = $("#regEmail").value.trim(), password = $("#regPassword").value;
+  if(!name){ toast("আপনার নাম দিন", "err"); return; }
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(cred.user, { displayName: name });
+    await set(ref(db, `users/${cred.user.uid}`), { name, email, photoURL:"", coins:0, totalEarned:0, totalWithdrawn:0, gamesWon:0, quizzesPlayed:0, lastLogin:serverTimestamp(), welcomeBonusClaimed:false, createdAt:serverTimestamp(), status:"active" });
+  } catch(err){ toast(friendlyErr(err), "err"); }
+  finally { btn.disabled = false; btn.textContent = "অ্যাকাউন্ট খুলুন"; }
+});
+
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: "select_account" });
+function isWebView(){ const ua = navigator.userAgent||""; return (/\bwv\b/.test(ua) || /Android.*Version\/[\d.]+/i.test(ua) || (/iPhone|iPad|iPod/i.test(ua) && !/Safari/i.test(ua))); }
+async function signInWithGoogle(){
+  const btn = $("#googleSignInBtn"); const orig = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span><span>সাইন ইন হচ্ছে...</span>`;
+  try {
+    if(isWebView()){ await signInWithRedirect(auth, googleProvider); }
+    else { try { await signInWithPopup(auth, googleProvider); } catch(e){ if(e && (e.code === "auth/popup-blocked" || e.code === "auth/cancelled-popup-request")) await signInWithRedirect(auth, googleProvider); else throw e; } }
+  } catch(e){ toast(friendlyErr(e), "err"); }
+  finally { btn.disabled = false; btn.innerHTML = orig; }
+}
+$("#googleSignInBtn").addEventListener("click", signInWithGoogle);
+(async function(){ try { const r = await getRedirectResult(auth); if(r && r.user) toast(`স্বাগতম ${r.user.displayName || r.user.email}!`, "ok"); } catch(e){ if(e && e.code) toast(friendlyErr(e), "err"); } })();
+
+onAuthStateChanged(auth, async (user) => {
+  if(!user){
+    detachListeners();
+    State.fbUser = null; State.profile = null;
+    State.transactions = []; State.notifications = []; State.allUsers = []; State.withdrawals = [];
+    State.myQuizPlays = {}; State.weeklyReward = null;
+    $("#app").classList.add("hidden");
+    $("#authScreen").classList.remove("hidden");
+    $("#loadingScreen").classList.add("hidden");
+    $("#walletPage").classList.remove("open");
+    $("#notifPage").classList.remove("open");
+    return;
+  }
+  State.fbUser = user;
+  $("#authScreen").classList.add("hidden");
+  $("#loadingScreen").classList.remove("hidden");
+  try {
+    const userRef = ref(db, `users/${user.uid}`);
+    const snap = await get(userRef);
+    if(!snap.exists()){
+      await set(userRef, { name: user.displayName || (user.email ? user.email.split("@")[0] : "User"), email: user.email || "", photoURL: user.photoURL || "", coins:0, totalEarned:0, totalWithdrawn:0, gamesWon:0, quizzesPlayed:0, lastLogin:serverTimestamp(), welcomeBonusClaimed:false, createdAt:serverTimestamp(), status:"active" });
+    } else {
+      const d = snap.val(); const patches = {};
+      if(typeof d.coins !== "number") patches.coins = 0;
+      if(typeof d.totalEarned !== "number") patches.totalEarned = 0;
+      if(typeof d.totalWithdrawn !== "number") patches.totalWithdrawn = 0;
+      if(typeof d.gamesWon !== "number") patches.gamesWon = 0;
+      if(typeof d.quizzesPlayed !== "number") patches.quizzesPlayed = 0;
+      if((!d.name || d.name === "User") && user.displayName) patches.name = user.displayName;
+      if(!d.photoURL && user.photoURL) patches.photoURL = user.photoURL;
+      if(Object.keys(patches).length) await update(userRef, patches);
+    }
+    await loadRemoteConfig();
+    applyBranding();
+    attachListeners(user.uid);
+    await ensureWelcomeBonus(user.uid);
+    $("#loadingScreen").classList.add("hidden");
+    $("#app").classList.remove("hidden");
+    navTo("home");
+    drawWheel($("#wheelCanvas"), REWARD_CONFIG.spinRewards);
+    setTimeout(() => showDailyPopup(), 1500);
+  } catch(err){ console.error(err); toast(friendlyErr(err), "err"); $("#loadingScreen").classList.add("hidden"); }
+});
+
+function applyBranding(){
+  document.title = REWARD_CONFIG.appName || "LATEST QUIZ";
+  if(REWARD_CONFIG.logoUrl){
+    const el2 = $("#authLogoCenter");
+    if(el2) el2.innerHTML = `<img src="${escapeHtml(REWARD_CONFIG.logoUrl)}" alt="" onerror="this.parentNode.innerHTML='Q'"/>`;
+  }
+}
+
+async function loadRemoteConfig(){
+  try { const s = await get(ref(db, "settings/config")); if(s.exists()) REWARD_CONFIG = { ...REWARD_CONFIG, ...s.val() }; } catch(e){}
+  if(!Array.isArray(REWARD_CONFIG.spinRewards) || !REWARD_CONFIG.spinRewards.length){
+    REWARD_CONFIG.spinRewards = [5,10,15,20,25,30,50,100];
+  }
+  let firebaseQuizzes = [];
+  try { const q = await get(ref(db, "settings/quizzes")); if(q.exists()) q.forEach(c => firebaseQuizzes.push({ id: c.key, ...c.val() })); } catch(e){}
+  const merged = []; const seen = new Set();
+  firebaseQuizzes.forEach(q => { if(q.active === false) return; const builtin = BUILTIN.find(b => b.id === q.id); merged.push({ ...q, _builtin: builtin }); seen.add(q.id); });
+  BUILTIN.forEach(b => { if(seen.has(b.id)) return; merged.push({ id: b.id, title: b.title, description: b.desc, icon: b.icon, cls: b.cls, entryFee: b.fee, prizePerCorrect: b.reward, questionCount: 10, allowReplay: true, active: true, _builtin: b }); });
+  State.quizzes = merged;
+}
+
+function attachListeners(uid){
+  detachListeners();
+  track(onValue(ref(db, ".info/serverTimeOffset"), s => { State.serverTimeOffset = s.val() || 0; }));
+  track(onValue(ref(db, `users/${uid}`), s => { State.profile = s.val(); renderAll(); }));
+  const today = todayKey();
+  track(onValue(ref(db, `users/${uid}/dailyProgress/${today}`), s => { State.dailyProgress[today] = s.val() || {}; renderEarn(); }));
+  track(onValue(ref(db, `users/${uid}/quizPlays`), s => { const out={}; s.forEach(c => out[c.key] = c.val()); State.myQuizPlays = out; renderHome(); }));
+  const txQ = query(ref(db, "transactions"), orderByChild("uid"), equalTo(uid), limitToLast(50));
+  track(onValue(txQ, s => { const out=[]; s.forEach(c => out.push({ id:c.key, ...c.val() })); out.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)); State.transactions=out; renderWallet(); }, err => console.warn(err)));
+  const wdQ = query(ref(db, "withdrawals"), orderByChild("uid"), equalTo(uid), limitToLast(30));
+  track(onValue(wdQ, s => { const out=[]; s.forEach(c => out.push({ id:c.key, ...c.val() })); out.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)); State.withdrawals=out; renderWallet(); }, err => console.warn(err)));
+  track(onValue(ref(db, `notifications/${uid}`), s => { const out=[]; s.forEach(c => out.push({ id:c.key, ...c.val() })); out.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)); State.notifications=out; renderNotifications(); renderNotifBadge(); }));
+  track(onValue(ref(db, "users"), s => {
+    const all = [];
+    s.forEach(c => { const v = c.val()||{}; all.push({ uid:c.key, name:v.name||"Anonymous", photoURL:v.photoURL||"", coins:typeof v.coins==="number"?v.coins:0, gamesWon:typeof v.gamesWon==="number"?v.gamesWon:0, quizzesPlayed:typeof v.quizzesPlayed==="number"?v.quizzesPlayed:0, createdAt:v.createdAt||0 }); });
+    all.sort((a,b) => { if((b.gamesWon||0)!==(a.gamesWon||0)) return (b.gamesWon||0)-(a.gamesWon||0); return (b.quizzesPlayed||0)-(a.quizzesPlayed||0); });
+    State.allUsers = all; renderRanking();
+  }));
+  track(onValue(ref(db, "settings/weeklyReward"), s => { State.weeklyReward = s.val() || null; renderWeeklyBox(); }));
+}
+
+async function ensureWelcomeBonus(uid){
+  const claimRef = ref(db, `users/${uid}/welcomeBonusClaimed`);
+  const snap = await get(claimRef);
+  if(snap.val() === true) return;
+  const amount = REWARD_CONFIG.welcomeBonus || 100;
+  const res = await runTransaction(claimRef, cur => (cur === true ? undefined : true));
+  if(!res.committed) return;
+  await addCoins(uid, amount);
+  const txRef = push(ref(db, "transactions"));
+  await set(txRef, { uid, type:"welcome", amount, title:"স্বাগত বোনাস", createdAt: Date.now() });
+  const nRef = push(ref(db, `notifications/${uid}`));
+  await set(nRef, { title:"স্বাগত!", body:`আপনি ${amount} কয়েন স্বাগত বোনাস পেয়েছেন।`, read:false, createdAt:Date.now() });
+  openModal(`<div class="quiz-result"><div class="qr-ico gift">${I.sparkle}</div><div class="qr-title">স্বাগত!</div><div class="qr-sub">আপনি স্বাগত বোনাস পেয়েছেন</div><div class="qr-stats"><div class="qr-stat"><div class="v">+${fmtNum(amount)}</div><div class="l">Coins</div></div></div><button class="btn accent" id="welcomeOk">শুরু করুন</button></div>`);
+  setTimeout(() => { const b = $("#welcomeOk"); if(b) b.addEventListener("click", closeModal); }, 50);
+}
+
+async function addCoins(uid, amount, extra = {}){
+  const cur = State.profile || {};
+  const updates = {};
+  updates[`users/${uid}/coins`] = (cur.coins || 0) + amount;
+  updates[`users/${uid}/totalEarned`] = (cur.totalEarned || 0) + amount;
+  if(extra.gamesWon) updates[`users/${uid}/gamesWon`] = (cur.gamesWon||0) + extra.gamesWon;
+  if(extra.quizzesPlayed) updates[`users/${uid}/quizzesPlayed`] = (cur.quizzesPlayed||0) + extra.quizzesPlayed;
+  await update(ref(db), updates);
+  if(State.profile){
+    State.profile.coins = (State.profile.coins||0) + amount;
+    State.profile.totalEarned = (State.profile.totalEarned||0) + amount;
+    if(extra.gamesWon) State.profile.gamesWon = (State.profile.gamesWon||0) + extra.gamesWon;
+    if(extra.quizzesPlayed) State.profile.quizzesPlayed = (State.profile.quizzesPlayed||0) + extra.quizzesPlayed;
+  }
+}
+
+function navTo(page){
+  $$(".nav-btn").forEach(x => x.classList.toggle("active", x.dataset.page === page));
+  $$(".page").forEach(p => p.classList.toggle("active", p.id === `page-${page}`));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+$$(".nav-btn").forEach(b => b.addEventListener("click", () => navTo(b.dataset.page)));
+
+/* ============ QUIZ ============ */
+async function startQuiz(quizId){
+  const quiz = State.quizzes.find(q => q.id === quizId);
+  if(!quiz){ toast("কুইজ পাওয়া যায়নি", "err"); return; }
+  const uid = State.fbUser.uid;
+  const profile = State.profile || {};
+  const allowReplay = quiz.allowReplay !== false;
+  if(!allowReplay && State.myQuizPlays[quizId]){ toast("আপনি এই কুইজ একবারই খেলতে পারবেন", "err"); return; }
+  const entryFee = quiz.entryFee || 50;
+  const rewardPer = quiz.prizePerCorrect || 15;
+  if((profile.coins || 0) < entryFee){ toast(`পর্যাপ্ত কয়েন নেই। প্রয়োজন ${entryFee} কয়েন।`, "err"); return; }
+  let fbQuestions = [];
+  try { const s = await get(ref(db, `settings/quizzes/${quizId}/questions`)); if(s.exists()) s.forEach(c => fbQuestions.push({ id:c.key, ...c.val() })); } catch(e){}
+  const builtinQs = (quiz._builtin && quiz._builtin.qs) ? quiz._builtin.qs.map((q,i)=>({ id:`builtin_${i}`, q:q.q, options:q.o, answer:q.a })) : [];
+  const seenTexts = new Set(); const pool = [];
+  fbQuestions.forEach(q => { const t = (q.q||q.question||"").trim(); if(t && !seenTexts.has(t)){ seenTexts.add(t); pool.push(q); } });
+  builtinQs.forEach(q => { const t = (q.q||"").trim(); if(t && !seenTexts.has(t)){ seenTexts.add(t); pool.push(q); } });
+  if(!pool.length){ toast("এই কুইজে প্রশ্ন নেই", "err"); return; }
+  const adminCount = fbQuestions.length;
+  const desired = adminCount > 0 ? Math.min(adminCount, 50) : Math.min(quiz.questionCount || 10, pool.length);
+  const numQ = Math.max(1, desired);
+  const sortedPool = [...pool].sort((a,b) => { const aFb = !String(a.id).startsWith('builtin_'); const bFb = !String(b.id).startsWith('builtin_'); if(aFb && !bFb) return -1; if(!aFb && bFb) return 1; return 0; });
+  const rotating = getRotatingQuestions(quizId, sortedPool, numQ);
+  const clientQ = rotating.map(q => {
+    const opts = Array.isArray(q.options) ? q.options : (Array.isArray(q.o) ? q.o : []);
+    const ansIdx = (q.answer !== undefined ? q.answer : (q.a !== undefined ? q.a : 0));
+    const correctText = opts[ansIdx] || "";
+    const shuffledOpts = seededShuffle(opts, hashStr(quizId + "_" + (q.id||q.q) + "_" + todayKey()));
+    return { id:q.id, q:q.q || q.question || "প্রশ্ন", options:shuffledOpts, _correct:correctText };
+  });
+  const maxPrize = clientQ.length * rewardPer;
+  confirmDialog(
+    "কুইজ নিশ্চিত করুন",
+    `খেলবেন <b>${escapeHtml(quiz.title)}</b>?<br/><br/>এন্ট্রি ফি: <b>${fmtNum(entryFee)} কয়েন</b><br/>প্রতি সঠিক: <b>${fmtNum(rewardPer)} কয়েন</b><br/>মোট প্রশ্ন: <b>${clientQ.length}টি</b><br/>সর্বোচ্চ পুরস্কার: <b>${fmtNum(maxPrize)} কয়েন</b>`,
+    async () => {
+      if(!allowReplay){
+        const playRef = ref(db, `users/${uid}/quizPlays/${quizId}`);
+        const playRes = await runTransaction(playRef, cur => (cur ? undefined : Date.now()));
+        if(!playRes.committed){ toast("আপনি ইতিমধ্যে খেলেছেন", "err"); return; }
+      }
+      const res = await runTransaction(ref(db, `users/${uid}/coins`), c => { const cc = c||0; if(cc < entryFee) return; return cc - entryFee; });
+      if(!res.committed){ if(!allowReplay){ try { await set(ref(db, `users/${uid}/quizPlays/${quizId}`), null); } catch(e){} } toast("পর্যাপ্ত কয়েন নেই", "err"); return; }
+      const txRef = push(ref(db, "transactions"));
+      await set(txRef, { uid, type:"quizEntry", amount:-entryFee, title:`কুইজ এন্ট্রি: ${quiz.title}`, createdAt: Date.now() });
+      State.currentQuiz = { ...quiz, entryFee, rewardPerCorrect: rewardPer };
+      State.currentQuestions = clientQ;
+      State.currentQuestionIdx = 0;
+      State.currentCorrect = 0;
+      State.currentWrong = 0;
+      setTimeout(() => renderQuizQuestion(), 200);
+    },
+    { icon: I.quiz, yesText: "হ্যাঁ, খেলবো" }
+  );
+}
+
+function renderQuizQuestion(){
+  if(State.currentQuestionIdx >= State.currentQuestions.length){ finishQuiz(); return; }
+  const q = State.currentQuestions[State.currentQuestionIdx];
+  const total = State.currentQuestions.length;
+  const idx = State.currentQuestionIdx + 1;
+  const time = REWARD_CONFIG.quizTimePerQuestion || 20;
+  openModal(`
+    <div class="quiz-header">
+      <div class="quiz-prog"><span>প্রশ্ন ${idx}/${total}</span></div>
+      <div class="quiz-timer" id="quizTimer">${I.clock}<span id="quizTimeLeft">${time}</span>s</div>
+    </div>
+    <div class="qprog-bar"><div style="width:${((idx-1)/total)*100}%"></div></div>
+    <div class="quiz-q">${escapeHtml(q.q)}</div>
+    <div class="quiz-opts" id="quizOpts">
+      ${(q.options||[]).map((opt, i) => `<button class="quiz-opt" data-idx="${i}"><span class="qnum">${String.fromCharCode(65+i)}</span><span>${escapeHtml(opt)}</span></button>`).join("")}
+    </div>
+  `);
+  $$("#quizOpts .quiz-opt").forEach(b => b.addEventListener("click", () => answerQuiz(parseInt(b.dataset.idx, 10), b)));
+  startQuizTimer(time);
+  if(!State._quizBlockClose){
+    const fn = (e) => { if(e.target.id === "modalRoot") e.stopPropagation(); };
+    State._quizBlockClose = fn;
+    $("#modalRoot").addEventListener("click", fn, true);
+  }
+}
+function startQuizTimer(seconds){
+  clearInterval(State.quizTimer);
+  let left = seconds;
+  const el = $("#quizTimeLeft"); const wrap = $("#quizTimer");
+  if(!el) return;
+  el.textContent = left;
+  State.quizTimer = setInterval(() => {
+    left--; if(el) el.textContent = left;
+    if(left <= 5 && wrap) wrap.classList.add("warn");
+    if(left <= 0){ clearInterval(State.quizTimer); timeUpQuiz(); }
+  }, 1000);
+}
+function timeUpQuiz(){
+  const q = State.currentQuestions[State.currentQuestionIdx];
+  $$("#quizOpts .quiz-opt").forEach((b, i) => { b.disabled = true; if(q.options[i] === q._correct) b.classList.add("right"); });
+  State.currentWrong++;
+  setTimeout(() => { State.currentQuestionIdx++; renderQuizQuestion(); }, 1400);
+}
+function answerQuiz(chosen, btn){
+  clearInterval(State.quizTimer);
+  const q = State.currentQuestions[State.currentQuestionIdx];
+  const isCorrect = q.options[chosen] === q._correct;
+  $$("#quizOpts .quiz-opt").forEach(b => b.disabled = true);
+  if(isCorrect){ btn.classList.add("right"); State.currentCorrect++; }
+  else { btn.classList.add("wrong"); $$("#quizOpts .quiz-opt").forEach((b, i) => { if(q.options[i] === q._correct) b.classList.add("right"); }); State.currentWrong++; }
+  setTimeout(() => { State.currentQuestionIdx++; renderQuizQuestion(); }, 1200);
+}
+async function finishQuiz(){
+  clearInterval(State.quizTimer);
+  if(State._quizBlockClose){ $("#modalRoot").removeEventListener("click", State._quizBlockClose, true); State._quizBlockClose = null; }
+  const uid = State.fbUser.uid;
+  const correct = State.currentCorrect; const wrong = State.currentWrong; const total = State.currentQuestions.length;
+  const quiz = State.currentQuiz;
+  const rewardPer = quiz.rewardPerCorrect || 15;
+  const totalReward = correct * rewardPer;
+  const isWin = correct >= Math.ceil(total * 0.6);
+  if(totalReward > 0){
+    await addCoins(uid, totalReward, { gamesWon: isWin ? 1 : 0, quizzesPlayed: 1 });
+    const txRef = push(ref(db, "transactions"));
+    await set(txRef, { uid, type:"quiz", amount:totalReward, title:`কুইজ: ${quiz.title} (${correct}/${total})`, createdAt: Date.now() });
+  } else {
+    await runTransaction(ref(db, `users/${uid}/quizzesPlayed`), c => (c||0) + 1);
+  }
+  openModal(`
+    <div class="quiz-result">
+      <div class="qr-ico ${isWin?'win':'lose'}">${isWin ? I.trophy : I.x}</div>
+      <div class="qr-title">${isWin?"আপনি জিতেছেন!":"আরো চেষ্টা করুন"}</div>
+      <div class="qr-sub">${isWin?"অভিনন্দন!":"আগামীকাল নতুন প্রশ্ন আসবে"}</div>
+      <div class="qr-stats">
+        <div class="qr-stat"><div class="v green">${correct}</div><div class="l">সঠিক</div></div>
+        <div class="qr-stat"><div class="v red">${wrong}</div><div class="l">ভুল</div></div>
+        <div class="qr-stat"><div class="v">+${fmtNum(totalReward)}</div><div class="l">Coins</div></div>
+      </div>
+      <button class="btn accent" id="quizOk">সম্পন্ন</button>
+    </div>
+  `);
+  setTimeout(() => { const b = $("#quizOk"); if(b) b.addEventListener("click", closeModal); }, 50);
+  State.currentQuiz = null; State.currentQuestions = []; State.currentQuestionIdx = 0;
+  State.currentCorrect = 0; State.currentWrong = 0;
+}
+
+/* ============ RENDER HOME (BENTO) ============ */
+function renderHome(){
+  const box = $("#quizListBox");
+  if(!State.quizzes.length){ box.innerHTML = `<div class="empty" style="grid-column:span 2"><div class="e-ico">${I.quiz}</div>কোনো কুইজ নেই</div>`; return; }
+  const iconMap = { globe:I.globe, flask:I.flask, book:I.book, quiz:I.quiz, flag:I.flag, film:I.film, trophy:I.trophy };
+  box.innerHTML = State.quizzes.map((q, idx) => {
+    const ico = iconMap[q.icon] || I.quiz;
+    const cls = q.cls || "c1";
+    const fee = q.entryFee || 50;
+    const rewardPer = q.prizePerCorrect || 15;
+    const nQ = 10;
+    const maxPrize = nQ * rewardPer;
+    const enough = (State.profile?.coins || 0) >= fee;
+    const played = !!State.myQuizPlays[q.id] && q.allowReplay === false;
+    const wide = (idx % 3 === 0);
+    if(wide){
+      return `
+        <div class="quiz-card wide ${played?'played':''}" data-quiz-id="${escapeHtml(q.id)}">
+          <div class="qc-ico ${cls}">${ico}</div>
+          <div class="qc-body">
+            <div class="qc-title">${escapeHtml(q.title)}</div>
+            <div class="qc-desc">${escapeHtml(q.description||"")}</div>
+            <div class="qc-meta">
+              <span class="qc-chip">এন্ট্রি ${fmtNum(fee)}</span>
+              <span class="qc-chip gold">প্রাইজ ${fmtNum(maxPrize)}</span>
+              <span class="qc-chip">${nQ}টি প্রশ্ন</span>
+            </div>
+          </div>
+          ${played
+            ? `<button class="qc-play played" disabled>✓ খেলা</button>`
+            : `<button class="qc-play" ${!enough?'disabled':''}>${enough?'খেলুন':'কয়েন কম'}</button>`}
+        </div>`;
+    }
+    return `
+      <div class="quiz-card ${played?'played':''}" data-quiz-id="${escapeHtml(q.id)}">
+        <div class="qc-top">
+          <div class="qc-ico ${cls}">${ico}</div>
+          <div class="qc-title">${escapeHtml(q.title)}</div>
+          <div class="qc-meta">
+            <span class="qc-chip">${fmtNum(fee)}</span>
+            <span class="qc-chip gold">${fmtNum(maxPrize)}</span>
+          </div>
+        </div>
+        ${played
+          ? `<button class="qc-play played" disabled>✓ খেলা</button>`
+          : `<button class="qc-play" ${!enough?'disabled':''}>${enough?'খেলুন':'কয়েন কম'}</button>`}
+      </div>`;
+  }).join("");
+  $$("[data-quiz-id]").forEach(row => {
+    row.addEventListener("click", (e) => {
+      const id = row.dataset.quizId;
+      const quiz = State.quizzes.find(q => q.id === id);
+      if(quiz && quiz.allowReplay === false && State.myQuizPlays[id]){ toast("আপনি এই কুইজ আগেই খেলেছেন", "err"); return; }
+      const btn = row.querySelector(".qc-play");
+      if(btn && btn.disabled){ toast("পর্যাপ্ত কয়েন নেই", "err"); return; }
+      startQuiz(id);
+    });
+  });
+}
+
+function renderEarn(){
+  const today = todayKey();
+  const used = (State.dailyProgress[today] || {}).spins || 0;
+  const freeLeft = Math.max(0, (REWARD_CONFIG.spinFreePerDay||5) - used);
+  const elLeft = $("#spinLeft"); if(elLeft) elLeft.textContent = freeLeft;
+  const elRange = $("#spinRange");
+  if(elRange){ const r = REWARD_CONFIG.spinRewards || []; if(r.length) elRange.textContent = `${r[0]}-${r[r.length-1]}`; }
+  const btn = $("#spinBtn");
+  if(btn && !State.spinning){
+    if(freeLeft <= 0){ btn.disabled = true; btn.textContent = "কাল আবার আসুন"; }
+    else { btn.disabled = false; btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> স্পিন করুন`; }
+  }
+  const sub = $("#spinSubLabel");
+  if(sub) sub.textContent = freeLeft > 0 ? `${freeLeft}টি ফ্রি স্পিন বাকি` : "ফ্রি স্পিন শেষ! YouTube থেকে কোড নিন।";
+}
+
+function renderWeeklyBox(){
+  const box = $("#weeklyBox");
+  if(!box) return;
+  const cfg = State.weeklyReward;
+  if(!cfg || !cfg.weeklyPrizes || !cfg.weeklyPrizes.length){ box.innerHTML = ""; return; }
+  const top5 = State.allUsers.slice(0, 5);
+  if(!top5.length){ box.innerHTML = ""; return; }
+  const medals = ["🥇","🥈","🥉","4️⃣","5️⃣"];
+  box.innerHTML = `
+    <div class="weekly-box">
+      <div class="wb-title">🏆 সাপ্তাহিক পুরস্কার</div>
+      <div class="wb-sub">প্রতি ৭ দিনে টপ ৫ প্লেয়ারকে কয়েন পুরস্কার</div>
+      ${top5.map((u, i) => `
+        <div class="weekly-row">
+          <div class="wr-medal">${medals[i]}</div>
+          <div class="wr-body">
+            <div class="wr-name">${escapeHtml(u.name)}</div>
+            <div class="wr-stat">${fmtNum(u.gamesWon)} জয় · ${fmtNum(u.quizzesPlayed)} কুইজ</div>
+          </div>
+          <div class="wr-prize">+${fmtNum(cfg.weeklyPrizes[i]||0)}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderRanking(){
+  const myUid = State.fbUser?.uid;
+  const myIdx = State.allUsers.findIndex(u => u.uid === myUid);
+  const myEntry = myIdx >= 0 ? State.allUsers[myIdx] : null;
+  $("#myRankNum").textContent = myIdx >= 0 ? `#${myIdx + 1}` : "—";
+  $("#myRankVal").innerHTML = myEntry ? `${escapeHtml(myEntry.name)} · <small>${fmtNum(myEntry.gamesWon||0)} জয়</small>` : "কুইজ খেলে র‍্যাংক পান";
+  const top10 = State.allUsers.slice(0, 10);
+  const listBox = $("#rankListBox");
+  if(!top10.length){ listBox.innerHTML = `<div class="empty"><div class="e-ico">${I.trophy}</div>কোনো র‍্যাংক নেই</div>`; $("#podiumBox").innerHTML = ""; return; }
+  listBox.innerHTML = top10.map((u, i) => {
+    const rank = i + 1;
+    const rankCls = rank <= 3 ? `g${rank}` : "";
+    const isMe = u.uid === myUid;
+    const initial = (u.name||"A").trim().charAt(0).toUpperCase();
+    const av = u.photoURL ? `<img src="${escapeHtml(u.photoURL)}" alt=""/>` : initial;
+    const champ = rank === 1 ? `<span class="champ-badge">👑</span>` : "";
+    return `
+      <div class="rank-row ${isMe?'me':''}">
+        <div class="rank-pos ${rankCls}">${rank}</div>
+        <div class="rank-av">${av}</div>
+        <div class="rank-info">
+          <div class="rank-name"><span style="overflow:hidden;text-overflow:ellipsis">${escapeHtml(u.name)}</span>${isMe?'<span class="you">আপনি</span>':''}${champ}</div>
+          <div class="rank-sub">${fmtNum(u.quizzesPlayed||0)} কুইজ খেলেছেন</div>
+        </div>
+        <div class="rank-wins"><div class="num">${ic("trophy", 13)} ${fmtNum(u.gamesWon||0)}</div><div class="lbl">জয়</div></div>
+      </div>`;
+  }).join("");
+  const top3 = State.allUsers.slice(0, 3);
+  const order = [top3[1], top3[0], top3[2]];
+  const rankFor = u => u ? top3.indexOf(u) + 1 : 0;
+  $("#podiumBox").innerHTML = order.map(u => {
+    if(!u) return `<div class="pod-item" style="opacity:.3"><div class="pod-av">—</div><div class="pod-name">—</div></div>`;
+    const rank = rankFor(u);
+    const cls = rank === 1 ? "first" : (rank === 2 ? "second" : "third");
+    const initial = (u.name||"A").trim().charAt(0).toUpperCase();
+    const av = u.photoURL ? `<img src="${escapeHtml(u.photoURL)}" alt=""/>` : initial;
+    return `
+      <div class="pod-item ${cls}">
+        ${rank === 1 ? `<div class="pod-crown">${I.crown}</div>` : ""}
+        <div class="pod-rank-tag">#${rank}</div>
+        <div class="pod-av">${av}</div>
+        <div class="pod-name">${escapeHtml(u.name)}</div>
+        <div class="pod-wins">${ic("trophy", 12)} ${fmtNum(u.gamesWon||0)}</div>
+      </div>`;
+  }).join("");
+}
+
+function renderProfile(){
+  const p = State.profile; if(!p) return;
+  $("#profName").textContent = p.name || "User";
+  $("#profEmail").textContent = p.email || "—";
+  const pav = $("#profAvatar");
+  if(p.photoURL) pav.innerHTML = `<img src="${escapeHtml(p.photoURL)}" alt=""/>`;
+  else pav.textContent = (p.name||"U").trim().charAt(0).toUpperCase();
+  $("#profCoins").textContent = fmtNum(p.coins||0);
+  $("#profWins").textContent = fmtNum(p.gamesWon||0);
+  $("#profEarned").textContent = fmtNum(p.totalEarned||0);
+  $("#profQuizzes").textContent = fmtNum(p.quizzesPlayed||0);
+  $("#profStatusBadge").textContent = (p.status||"active").toUpperCase();
+  $("#hdrName").textContent = p.name || "User";
+  const av = $("#hdrAvatar");
+  if(p.photoURL) av.innerHTML = `<img src="${escapeHtml(p.photoURL)}" alt=""/>`;
+  else av.textContent = (p.name||"U").trim().charAt(0).toUpperCase();
+}
+
+function renderWallet(){
+  const p = State.profile; if(!p) return;
+  $("#walletCoins").textContent = fmtNum(p.coins||0);
+  $("#walletTaka").textContent = fmtTakaStr(p.coins||0);
+  $("#walletEarned").textContent = fmtNum(p.totalEarned||0);
+  $("#walletWithdrawn").textContent = fmtNum(p.totalWithdrawn||0);
+  const wdBox = $("#walletWdBox");
+  if(!State.withdrawals.length){ wdBox.innerHTML = `<div class="empty"><div class="e-ico">${I.chart}</div>কোনো অনুরোধ নেই</div>`; }
+  else {
+    wdBox.innerHTML = State.withdrawals.slice(0, 10).map(w => {
+      const date = w.createdAt ? new Date(w.createdAt).toLocaleString("en-GB", { day:"numeric", month:"short" }) : "";
+      return `<div class="wd-item"><div class="wd-top"><span class="wd-method">${escapeHtml(w.method)}</span><span class="wd-coins">${fmtNum(w.coins)} coins</span></div><div class="wd-info">${escapeHtml(w.accountNumber||"")} · ৳${(w.amount||0).toFixed(2)} · ${date}</div><span class="status-pill ${w.status}">${w.status}</span></div>`;
+    }).join("");
+  }
+  const txBox = $("#walletTxBox");
+  if(!State.transactions.length){ txBox.innerHTML = `<div class="empty"><div class="e-ico">${I.chart}</div>কোনো লেনদেন নেই</div>`; return; }
+  const txIconMap = { welcome:I.sparkle, spin:I.wheel, redeem:I.gift, quiz:I.quiz, quizEntry:I.quiz, tournamentEntry:I.trophy, prize:I.trophy, weekly_prize:I.trophy, withdrawal:I.chart, admin_bonus:I.coin };
+  txBox.innerHTML = State.transactions.slice(0, 30).map(t => {
+    const cls = t.amount > 0 ? "pos" : "neg";
+    const date = t.createdAt ? new Date(t.createdAt).toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" }) : "";
+    return `<div class="tx"><div class="t-ico">${txIconMap[t.type]||I.coin}</div><div class="t-body"><div class="t-title">${escapeHtml(t.title||t.type)}</div><div class="t-date">${date}</div></div><div class="t-amt ${cls}">${t.amount>0?"+":""}${fmtNum(t.amount)}</div></div>`;
+  }).join("");
+}
+
+function renderNotifications(){
+  const box = $("#notifListBox");
+  if(!State.notifications.length){ box.innerHTML = `<div class="empty"><div class="e-ico">${I.bell}</div>কোনো নোটিফিকেশন নেই</div>`; return; }
+  box.innerHTML = State.notifications.map(n => {
+    const date = n.createdAt ? new Date(n.createdAt).toLocaleString("en-GB", { day:"numeric", month:"short", hour:"2-digit", minute:"2-digit" }) : "";
+    return `<div class="notif-item ${n.read?'':'unread'}"><div class="ni">${I.bell}</div><div class="nb"><div class="nt">${escapeHtml(n.title||"Notification")}</div><div class="nx">${escapeHtml(n.body||"")}</div><div class="nd">${date}</div></div></div>`;
+  }).join("");
+}
+function renderNotifBadge(){
+  const unread = State.notifications.filter(n => !n.read).length;
+  const nb = $("#notifBadge");
+  if(unread > 0){ nb.textContent = unread > 9 ? "9+" : unread; nb.classList.remove("hidden"); } else nb.classList.add("hidden");
+}
+
+function renderAll(){ renderHome(); renderEarn(); renderRanking(); renderWeeklyBox(); renderProfile(); renderWallet(); }
+
+$("#walletBtn").addEventListener("click", () => { $("#walletPage").classList.add("open"); renderWallet(); });
+$("#walletBack").addEventListener("click", () => $("#walletPage").classList.remove("open"));
+$("#notifBtn").addEventListener("click", () => { $("#notifPage").classList.add("open"); renderNotifications(); });
+$("#notifBack").addEventListener("click", () => $("#notifPage").classList.remove("open"));
+$("#markAllRead").addEventListener("click", async () => {
+  const updates = {};
+  State.notifications.forEach(n => { if(!n.read) updates[`notifications/${State.fbUser.uid}/${n.id}/read`] = true; });
+  if(Object.keys(updates).length){ try { await update(ref(db), updates); toast("সব পড়া হয়েছে", "ok"); } catch(e){ toast("ব্যর্থ", "err"); } }
+});
+
+async function doSpin(){
+  if(State.spinning) return;
+  const uid = State.fbUser.uid;
+  const today = todayKey();
+  const progRef = ref(db, `users/${uid}/dailyProgress/${today}/spins`);
+  const used = (State.dailyProgress[today] || {}).spins || 0;
+  if(Math.max(0, (REWARD_CONFIG.spinFreePerDay||5) - used) <= 0){ toast("ফ্রি স্পিন শেষ!", "err"); return; }
+  State.spinning = true;
+  const btn = $("#spinBtn"); btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  const rewards = REWARD_CONFIG.spinRewards && REWARD_CONFIG.spinRewards.length ? REWARD_CONFIG.spinRewards : [5,10,15,20,25,30,50,100];
+  const idx = Math.floor(Math.random() * rewards.length);
+  const reward = rewards[idx];
+  const spinRes = await runTransaction(progRef, cur => { const c = cur||0; if(c >= (REWARD_CONFIG.spinFreePerDay||5)) return; return c+1; });
+  if(!spinRes.committed){ State.spinning = false; btn.disabled = false; toast("ফ্রি স্পিন শেষ", "err"); return; }
+  const canvas = $("#wheelCanvas");
+  if(canvas){
+    const n = rewards.length; const degPerSeg = 360/n;
+    const currentRot = parseFloat(canvas.dataset.rot||"0");
+    const targetMod = (270 - idx*degPerSeg - degPerSeg/2 + 360*100) % 360;
+    const finalRot = currentRot + (360 - (currentRot%360)) + 6*360 + targetMod;
+    canvas.dataset.rot = String(finalRot);
+    canvas.style.transform = `rotate(${finalRot}deg)`;
+  }
+  await new Promise(r => setTimeout(r, 5100));
+  await addCoins(uid, reward);
+  const txRef = push(ref(db, "transactions"));
+  await set(txRef, { uid, type:"spin", amount:reward, title:"স্পিন রিওয়ার্ড", createdAt: Date.now() });
+  State.spinning = false; btn.disabled = false;
+  openModal(`<div class="quiz-result"><div class="qr-ico spin">${I.wheel}</div><div class="qr-title">আপনি জিতেছেন!</div><div class="qr-sub">কয়েন আপনার অ্যাকাউন্টে যোগ হয়েছে</div><div class="qr-stats"><div class="qr-stat"><div class="v">+${fmtNum(reward)}</div><div class="l">Coins</div></div></div><button class="btn accent" id="spinOk">নিন</button></div>`);
+  setTimeout(() => { const b = $("#spinOk"); if(b) b.addEventListener("click", closeModal); }, 50);
+  renderEarn();
+}
+
+function drawWheel(canvas, segments){
+  if(!canvas) return;
+  if(!segments || !segments.length) segments = [5,10,15,20,25,30,50,100];
+  const ctx = canvas.getContext("2d");
+  const n = segments.length; const arc = (2*Math.PI)/n;
+  const cx = canvas.width/2, cy = canvas.height/2; const r = cx - 16;
+  const colors = ["#ec4899","#f472b6","#f43f5e","#fb7185","#db2777","#f9a8d4","#be123c","#e11d48"];
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<n;i++){
+    const start = i*arc, end = start+arc;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,start,end); ctx.closePath();
+    ctx.fillStyle = colors[i%colors.length]; ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,.4)"; ctx.lineWidth = 3; ctx.stroke();
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(start+arc/2);
+    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = "900 40px system-ui";
+    ctx.fillText(String(segments[i]), r-30, 15);
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx,cy,50,0,2*Math.PI); ctx.fillStyle = "#fff"; ctx.fill();
+  ctx.strokeStyle = "#ec4899"; ctx.lineWidth = 4; ctx.stroke();
+  ctx.fillStyle = "#ec4899"; ctx.font = "900 24px system-ui"; ctx.textAlign = "center";
+  ctx.fillText("SPIN", cx, cy+9);
+}
+
+$("#spinBtn").addEventListener("click", () => {
+  const today = todayKey();
+  const used = (State.dailyProgress[today] || {}).spins || 0;
+  if(Math.max(0, (REWARD_CONFIG.spinFreePerDay||5) - used) <= 0){ toast("ফ্রি স্পিন শেষ!", "err"); return; }
+  doSpin();
+});
+
+$("#redeemBtn").addEventListener("click", async () => {
+  const input = $("#redeemInput");
+  const code = (input.value||"").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if(!code || code.length < 3){ toast("সঠিক কোড দিন", "err"); return; }
+  const btn = $("#redeemBtn"); btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  try {
+    const uid = State.fbUser.uid;
+    const codeSnap = await get(ref(db, `settings/redeemCodes/${code}`));
+    if(!codeSnap.exists()){ toast("কোডটি সঠিক নয়", "err"); return; }
+    const cfg = codeSnap.val();
+    if(cfg.enabled === false){ toast("কোডটি বন্ধ আছে", "err"); return; }
+    const usedSnap = await get(ref(db, `users/${uid}/redeemCodeUses/${code}`));
+    if(usedSnap.exists()){ toast("আগেই ব্যবহার করেছেন", "err"); return; }
+    const today = todayKey();
+    const dailySnap = await get(ref(db, `settings/redeemCodes/${code}/usedOn/${today}`));
+    const usedToday = dailySnap.val() || 0;
+    const limit = typeof cfg.dailyLimit === "number" ? cfg.dailyLimit : 100;
+    if(usedToday >= limit){ toast("আজকের সীমা শেষ", "err"); return; }
+    const useRes = await runTransaction(ref(db, `users/${uid}/redeemCodeUses/${code}`), cur => (cur ? undefined : Date.now()));
+    if(!useRes.committed){ toast("আগেই ব্যবহার করেছেন", "err"); return; }
+    try { await runTransaction(ref(db, `settings/redeemCodes/${code}/usedOn/${today}`), c => (c||0)+1); await runTransaction(ref(db, `settings/redeemCodes/${code}/totalUsed`), c => (c||0)+1); } catch(e){}
+    const reward = typeof cfg.coins === "number" ? cfg.coins : 500;
+    await addCoins(uid, reward);
+    const txRef = push(ref(db, "transactions"));
+    await set(txRef, { uid, type:"redeem", amount:reward, title:`রিডিম: ${code}`, code, createdAt:Date.now() });
+    const nRef = push(ref(db, `notifications/${uid}`));
+    await set(nRef, { title:"কোড রিডিম!", body:`+${reward} কয়েন আপনার অ্যাকাউন্টে যোগ হয়েছে।`, read:false, createdAt:Date.now() });
+    input.value = ""; toast(`+${reward} কয়েন যোগ হয়েছে!`, "ok");
+    openModal(`<div class="quiz-result"><div class="qr-ico gift">${I.gift}</div><div class="qr-title">কোড রিডিম সফল!</div><div class="qr-sub">আপনার অ্যাকাউন্টে কয়েন যোগ হয়েছে</div><div class="qr-stats"><div class="qr-stat"><div class="v">+${fmtNum(reward)}</div><div class="l">Coins</div></div></div><button class="btn accent" id="redeemOk">দারুণ!</button></div>`);
+    setTimeout(() => { const b = $("#redeemOk"); if(b) b.addEventListener("click", closeModal); }, 50);
+  } catch(e){ toast(friendlyErr(e), "err"); }
+  finally { btn.disabled = false; btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><polyline points="20 6 9 17 4 12"/></svg> রিডিম করুন`; }
+});
+
+$("#ytBtn").addEventListener("click", async () => {
+  let link = REWARD_CONFIG.youtubeChannelLink || "";
+  if(!link){ try { const s = await get(ref(db, "settings/youtube")); if(s.exists()) link = s.val().channelLink || ""; } catch(e){} }
+  if(link) window.open(link, "_blank"); else toast("YouTube লিংক সেট করা নেই", "err");
+});
+
+async function openWithdrawForm(){
+  const p = State.profile; const coins = p?.coins || 0;
+  const min = REWARD_CONFIG.minWithdrawalCoins || 10000;
+  if(coins < min){ toast(`সর্বনিম্ন ${fmtNum(min)} কয়েন প্রয়োজন। আপনার আছে ${fmtNum(coins)}।`, "err"); return; }
+  const pending = State.withdrawals.find(w => w.status === "pending");
+  if(pending){ toast("আপনার আগের অনুরোধ এখনো pending", "err"); return; }
+  openModal(`<h3>টাকা তোলার অনুরোধ</h3><p class="sub">সর্বনিম্ন ${fmtNum(min)} কয়েন (৳${fmtTakaStr(min)})।</p><div class="withdraw-method" id="wdMethods"><div class="method sel" data-m="bKash">bKash</div><div class="method" data-m="Nagad">Nagad</div><div class="method" data-m="Rocket">Rocket</div></div><div class="field"><label>অ্যাকাউন্ট নম্বর</label><input type="tel" id="wdAcc" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14"/></div><div class="field"><label>কয়েন পরিমাণ</label><input type="number" id="wdCoins" inputmode="numeric" placeholder="${min}" min="${min}" step="100"/><div class="muted" style="font-size:12px;margin-top:6px">≈ ৳<span id="wdTaka">0.00</span> · উপলব্ধ: ${fmtNum(coins)}</div></div><button class="btn accent" id="wdSubmit">অনুরোধ পাঠান</button><button class="btn ghost mt-8" id="wdCancel">বাতিল</button>`);
+  $("#wdCancel").addEventListener("click", closeModal);
+  let method = "bKash";
+  $$("#wdMethods .method").forEach(b => { b.addEventListener("click", () => { $$("#wdMethods .method").forEach(x => x.classList.remove("sel")); b.classList.add("sel"); method = b.dataset.m; }); });
+  const wc = $("#wdCoins");
+  wc.addEventListener("input", () => { $("#wdTaka").textContent = fmtTakaStr(parseInt(wc.value||"0", 10)); });
+  $("#wdSubmit").addEventListener("click", async () => {
+    const acc = $("#wdAcc").value.trim(); const amt = parseInt(wc.value||"0", 10);
+    if(!/^[0-9]{10,14}$/.test(acc)){ toast("সঠিক অ্যাকাউন্ট নম্বর দিন", "err"); return; }
+    if(!amt || amt < min){ toast(`সর্বনিম্ন ${fmtNum(min)} কয়েন`, "err"); return; }
+    if(amt > coins){ toast("পর্যাপ্ত কয়েন নেই", "err"); return; }
+    const btn = $("#wdSubmit"); btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+    try {
+      const uid = State.fbUser.uid;
+      const res = await runTransaction(ref(db, `users/${uid}/coins`), c => { const cc = c||0; if(cc < amt) return; return cc - amt; });
+      if(!res.committed){ toast("পর্যাপ্ত কয়েন নেই", "err"); return; }
+      const wdRef = push(ref(db, "withdrawals"));
+      await set(wdRef, { uid, name: p.name||"", email: p.email||"", method, accountNumber: acc, coins: amt, amount: +(amt / REWARD_CONFIG.coinsPerTaka).toFixed(2), status:"pending", createdAt: Date.now() });
+      const txRef = push(ref(db, "transactions"));
+      await set(txRef, { uid, type:"withdrawal", amount:-amt, title:`উইথড্রয়াল: ${method}`, status:"pending", createdAt: Date.now() });
+      const nRef = push(ref(db, `notifications/${uid}`));
+      await set(nRef, { title:"উইথড্রয়াল অনুরোধ", body:`${fmtNum(amt)} কয়েন (৳${fmtTakaStr(amt)}) ${method} — পেন্ডিং।`, read:false, createdAt:Date.now() });
+      closeModal(); toast("অনুরোধ পাঠানো হয়েছে", "ok");
+    } catch(e){ toast(friendlyErr(e), "err"); }
+    finally { const b = $("#wdSubmit"); if(b){ b.disabled = false; b.textContent = "অনুরোধ পাঠান"; } }
+  });
+}
+$("#walletWdBtn").addEventListener("click", openWithdrawForm);
+$("#menuWithdraw").addEventListener("click", openWithdrawForm);
+
+$("#menuLogout").addEventListener("click", () => {
+  confirmDialog("লগআউট", "আপনি কি লগআউট করতে চান?", async () => { try { await signOut(auth); } catch(e){ toast(friendlyErr(e), "err"); } }, { danger: true, yesText: "লগআউট" });
+});
+
+$("#menuEdit").addEventListener("click", () => {
+  openModal(`<h3>প্রোফাইল সম্পাদনা</h3><div class="field"><label>নাম</label><input type="text" id="editName" value="${escapeHtml(State.profile.name||"")}" maxlength="40"/></div><button class="btn" id="saveProfile">সংরক্ষণ</button><button class="btn ghost mt-8" id="cancelEdit">বাতিল</button>`);
+  $("#cancelEdit").addEventListener("click", closeModal);
+  $("#saveProfile").addEventListener("click", async () => {
+    const name = $("#editName").value.trim();
+    if(!name){ toast("নাম খালি রাখা যাবে না", "err"); return; }
+    try { await update(ref(db, `users/${State.fbUser.uid}`), { name }); if(auth.currentUser) await updateProfile(auth.currentUser, { displayName: name }); closeModal(); toast("আপডেট হয়েছে", "ok"); }
+    catch(e){ toast(friendlyErr(e), "err"); }
+  });
+});
+
+function showDailyPopup(){
+  if(!REWARD_CONFIG.popupEnabled) return;
+  if(!REWARD_CONFIG.popupImageUrl && !REWARD_CONFIG.popupTitle) return;
+  const td = todayKey();
+  if(localStorage.getItem(`popup_dismissed_${td}`) === "1") return;
+  $("#popupImg").src = REWARD_CONFIG.popupImageUrl || "";
+  $("#popupImg").style.display = REWARD_CONFIG.popupImageUrl ? "block" : "none";
+  $("#popupTitle").textContent = REWARD_CONFIG.popupTitle || "";
+  $("#popupText").textContent = REWARD_CONFIG.popupText || "";
+  const link = REWARD_CONFIG.popupLink || "";
+  $("#popupCta").style.display = link ? "flex" : "none";
+  $("#popupBg").classList.add("open");
+  const close = () => $("#popupBg").classList.remove("open");
+  $("#popupCta").onclick = () => { if(link) window.open(link, "_blank"); close(); };
+  $("#popupSkip").onclick = () => { localStorage.setItem(`popup_dismissed_${td}`, "1"); close(); };
+  $("#popupBg").onclick = e => { if(e.target.id === "popupBg") close(); };
+}
+
+setInterval(() => { if(State.profile) renderEarn(); }, 60000);
+</script>
+</body>
+</html>
